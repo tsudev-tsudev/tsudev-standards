@@ -8,7 +8,7 @@ chỉ-đọc và **đồng bộ xuống** từ đây, không sửa ngược.
 
 | Đường dẫn | Vai trò |
 | --- | --- |
-| `AGENTS.md` | Bộ quy ước v1.0.0 — nạp đầu mỗi phiên agent. Bất khả xâm phạm ở repo con. |
+| `AGENTS.md` | Bộ quy ước v1.0.0 - nạp đầu mỗi phiên agent. Bất khả xâm phạm ở repo con. |
 | `docs/DESIGN_SYSTEM.md` | Quy ước giao diện: token, thang chữ, quy tắc phát hành. |
 | `docs/PROJECT_STRUCTURE.md` | Cây thư mục chuẩn cho repo mới. |
 | `docs/templates/HANDOVER.md` | Mẫu phiếu bàn giao giữa các phiên. |
@@ -24,13 +24,13 @@ chỉ-đọc và **đồng bộ xuống** từ đây, không sửa ngược.
 
 ## Đề xuất đang chờ (từ repo `tsudev`)
 
-- `proposals/token-upstream-proposal.md` — hai mã màu chưa đạt WCAG AA, kèm số đo.
-- `proposals/structure-upstream-proposal.md` — bổ sung hình trạng monorepo vào cây chuẩn.
+- `proposals/token-upstream-proposal.md` - hai mã màu chưa đạt WCAG AA, kèm số đo.
+- `proposals/structure-upstream-proposal.md` - bổ sung hình trạng monorepo vào cây chuẩn.
 
 Cả hai nên được mở thành **Issue** để theo dõi quyết định.
 
 ## Vì sao Private
 
-Repo này **không chạy workflow CI nào** nên dùng 0 phút GitHub Actions — giới hạn
+Repo này **không chạy workflow CI nào** nên dùng 0 phút GitHub Actions - giới hạn
 2.000 phút/tháng của gói Free (repo Private) không bao giờ chạm tới. Giữ Private
 để bảo mật; chỉ chuyển Public nếu về sau thêm workflow và cần phút Actions miễn phí.

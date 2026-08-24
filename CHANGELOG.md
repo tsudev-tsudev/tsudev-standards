@@ -8,6 +8,65 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.7.0 - 24/08/2026
+
+**Sửa lỗi quan trọng về nội dung.** `v2.4.0` và `v2.6.0` mô tả sai bộ nhận diện
+của hệ sinh thái. Bản này sửa lại theo bằng chứng đo được. Không repo nào kịp làm
+theo phần sai, nên không có bước di trú nào.
+
+### Chuyện đã xảy ra
+
+`v2.4.0` dựng chuẩn thương hiệu từ mã nguồn của `tsudev-cwico`. `v2.6.0` phát hiện
+file `logo-tsudev.png` trên máy cá nhân khác hẳn con cú của `cwico`, và kết luận
+**sai** rằng file đó là bản gốc chính thức còn `cwico` mới là bên lệch chuẩn.
+
+Sự thật, kiểm chứng bằng đo đạc:
+
+- Con cú của `tsudev-cwico` và `logo-mark.png` đang chạy trên tsudev.com là **cùng
+  một tác phẩm**: IoU hình dạng **0.957**, màu trung bình `[83,130,159]` so với
+  `[84,131,161]`.
+- Repo `tsudev` đã có sẵn dây chuyền thương hiệu hoàn chỉnh từ **02/08/2026**:
+  `packages/brand/source/logo.jpeg` `2048x2048`, `build-assets.js` sinh
+  `logo-full` / `logo-mark` / `logo-wordmark` / favicon / avatar.
+- `logo-tsudev.png` tạo ngày **23/08/2026** và **chưa từng được dùng ở repo nào**.
+
+Nói cho gọn: `tsudev-cwico` chưa bao giờ lệch chuẩn. Nó dùng đúng dấu hiệu chính
+thức. Huy hiệu xanh cyan mới là file lạc, và `v2.6.0` đã phong nhầm nó làm bản gốc.
+
+### Sửa lỗi
+
+- `docs/BRAND_ASSETS.md` viết lại theo bộ nhận diện thật:
+  - **Mục 1** trỏ bản gốc về `tsudev/packages/brand/source/logo.jpeg`, kèm SHA-256
+    và cách chạy lại dây chuyền. Repo quy ước **không giữ bản sao** - hai bản gốc
+    song song là hai bản gốc sẽ trôi khỏi nhau.
+  - **Mục 2** - dấu hiệu thu gọn (`logo-mark.png`) **đã tồn tại**, là dấu hiệu mặc
+    định trên giao diện và bắt buộc cho mọi icon. Logo đầy đủ có tagline nên chỉ
+    dùng từ **160px** trở lên. Việc `TS-5` (tạo dấu hiệu thu gọn) vì vậy **không
+    còn cần làm**.
+  - **Mục 4** - chữ navy `#11355A` chỉ đạt **1.38:1** trên nền Tối, nên `MUST NOT`
+    dùng `logo-full.png` và `logo-wordmark.png` trên nền tối.
+  - **Mục 5** - bảng màu đo lại từ bản gốc thật (navy `#11355A`, cam `#FE7B2E`).
+    Chữ dựng bằng text `MUST` lấy màu từ token `text-primary` và `text-link` - hai
+    token này đã qua cổng canh nên luôn đạt chuẩn, không phải đo lại. Cam trong ảnh
+    chỉ đạt **2.35:1** trên nền sáng, `MUST NOT` dùng cho chữ.
+  - **Mục 7** ghi cả hai dây chuyền đang chạy thật: `build-assets.js` cho web,
+    `gen_icons.py` cho desktop.
+  - **Mục 11** mới - `assets/brand/variants/tsudev-badge-cyan.png`, có nhãn rõ là
+    **không dùng cho sản phẩm**. Giữ lại để không mất, không phải để dùng.
+- `assets/brand/tsudev-logo.png` chuyển thành
+  `assets/brand/variants/tsudev-badge-cyan.png`. Vẫn nằm ngoài bộ đồng bộ.
+- `docs/00-INDEX.md` cập nhật theo.
+
+### Bài học ghi lại
+
+`v2.4.0` viết chuẩn thương hiệu **mà chưa từng mở file ảnh ra xem**, chỉ đọc mã
+nguồn và chú thích rồi suy ra. `v2.6.0` mở ảnh ra xem nhưng **chỉ xem một ảnh**,
+không đi tìm xem hệ sinh thái đã có bộ nhận diện nào chưa. Quy tắc rút ra: tài sản
+hình ảnh `MUST` mở ra xem và đo, và `MUST` tìm hết các nơi đang dùng nó trước khi
+kết luận cái nào là chuẩn.
+
+---
+
 ## 2.6.0 - 24/08/2026
 
 Bổ sung thuần, kèm một chỗ **sửa lại nội dung sai của chính `v2.4.0`**. Đồng bộ

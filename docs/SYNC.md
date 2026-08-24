@@ -172,4 +172,5 @@ biết repo cố ý đứng ở bản nào, chứ không phải quên nâng.
 | `bản tải về không khớp MANIFEST.sha256` | Bản trung tâm quên chạy `make-manifest.sh`, hoặc gói bị can thiệp trên đường truyền | **Không dùng bản đó.** Báo ngay theo `SECURITY.md` mục 3 |
 | `LỆCH: .standards/... khác bản trung tâm` | Có người sửa bản sao chỉ-đọc | Chạy `./scripts/sync-standards.sh`, đưa thay đổi lên `proposals/` |
 | `thiếu .standards-version` | Chép tay thay vì chạy script | Chạy `./scripts/sync-standards.sh` |
-| Không ghi được vào `.standards/` | Thư mục đã bị đặt chỉ-đọc | Đúng như thiết kế. Đừng `chmod` để sửa, hãy sửa ở trung tâm |
+| Không ghi được vào `.standards/` | File đã bị đặt chỉ-đọc sau khi đồng bộ | Đúng như thiết kế. Đừng `chmod` để sửa, hãy sửa ở trung tâm |
+| `git checkout` báo `unable to unlink '.standards/...'` | Cây cũ đồng bộ bằng bản trước v2.2.1 bị đặt chỉ-đọc cả **thư mục** | `chmod -R u+w .standards` một lần, rồi `./scripts/sync-standards.sh` để lấy bản đã vá |

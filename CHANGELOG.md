@@ -8,6 +8,27 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.3.2 - 24/08/2026
+
+Bản vá tài liệu. Không đổi mã.
+
+### Thêm mới
+
+- `docs/SYNC.md` mục **3.1 - loại `.standards/` khỏi mọi công cụ tự sửa file**
+  (Prettier, ESLint `--fix`, Black, `dotnet format`, `rustfmt`, và cả "format on
+  save" của IDE).
+
+  `MANIFEST.sha256` băm từng byte. Một lần Prettier chạy qua là đủ đổi dấu cách
+  và xuống dòng, làm lệch băm, khiến `sync-standards.sh --check` báo lệch **vĩnh
+  viễn**. Tệ hơn: cổng kiểm CI đỏ vì lý do không liên quan gì tới nội dung công
+  việc, và người ta bắt đầu học cách bỏ qua nó.
+
+  Lỗi có thật, gặp ngay ở repo `tsudev` khi áp bộ quy ước v2 - Prettier báo 26
+  file "sai định dạng", trong đó 25 file là bản sao chỉ-đọc mà lẽ ra không ai
+  được chạm vào.
+
+---
+
 ## 2.3.1 - 24/08/2026
 
 Bản vá **quan trọng cho repo .NET**.

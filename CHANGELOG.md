@@ -8,6 +8,35 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.3.0 - 24/08/2026
+
+Bổ sung một cổng canh cho lỗi im lặng nguy hiểm nhất tìm được cho tới nay.
+
+### Thêm mới
+
+- **Cổng kiểm mục 3b: file bắt buộc phải được commit.**
+
+  Quy tắc `.gitignore` riêng của repo có thể nuốt mất chính những file mà bộ quy
+  ước bắt buộc phải commit, và nuốt **hoàn toàn im lặng**. Hai ca có thật, cả hai
+  đều lọt qua cổng kiểm cũ:
+
+  | Repo | Chuyện gì xảy ra |
+  | --- | --- |
+  | `tsudev-cwico` | Dòng `/logs/` (vốn dành cho nhật ký chạy của ứng dụng) chặn luôn **toàn bộ** thư mục điều phối phiên. `logs/STATE.md` và `logs/LOCKS.md` có trên đĩa nhưng không bao giờ được commit - `AGENT_PROTOCOL.md` mất nền tảng mà không ai biết |
+  | `swico` | Một quy tắc cũ chặn `.standards/templates/logs/*`, khiến **bản sao quy ước bị khuyết 3 file** so với bản trung tâm |
+
+  Cổng kiểm nay xác minh: `logs/STATE.md` và `logs/LOCKS.md` tồn tại **và** thực
+  sự nằm trong chỉ mục git; toàn bộ file trong `.standards/` không bị quy tắc nào
+  chặn. Khi thất bại, nó in ra **đúng dòng `.gitignore` gây ra** và gợi ý cách thu
+  hẹp quy tắc.
+
+### Sửa lỗi
+
+- Repo trung tâm bắt mọi repo phải có `logs/` theo `PROJECT_STRUCTURE.md` nhưng
+  bản thân lại không có. Nay đã có, và chính cổng kiểm mới là thứ phát hiện ra.
+
+---
+
 ## 2.2.2 - 24/08/2026
 
 Bản vá tài liệu. Không đổi mã.

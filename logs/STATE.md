@@ -5,21 +5,6 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-- [ ] **TS-2** Sửa `docs/GIT_WORKFLOW.md` mục 4.4. Quy ước đòi "tối thiểu 1 người
-      duyệt", nhưng GitHub **không cho tự duyệt PR của mình**, nên repo một người
-      sẽ tự khóa hoàn toàn. Branch protection của chính repo này đang phải đặt
-      `required_approving_review_count = 0` để không bế tắc - tức là thực tế đang
-      lệch tài liệu. Cần viết rõ: repo từ 2 người trở lên thì 1 duyệt, repo một
-      người thì 0 duyệt nhưng vẫn bắt buộc PR và cổng kiểm.
-      Đây là `PATCH`.
-- [ ] **TS-3** Cân nhắc bổ sung `templates/gitignore/go.gitignore` và
-      `java.gitignore`. `LANGUAGE_SELECTION.md` mục 2.1 xếp Go và Java (Spring Boot)
-      ở mức ⭐ hoặc ✅ nhưng bộ mẫu chưa có. Cùng loại thiếu sót với `rust.gitignore`
-      đã vá ở v2.1.0. Đây là `MINOR`.
-- [ ] **TS-4** Quyết định `sumy-wedding` (Private, trang thiệp cưới cá nhân) có
-      thuộc hệ sinh thái tsudev không. Nếu có thì đồng bộ bộ quy ước; nếu không thì
-      ghi một dòng ở đây để phiên sau không hỏi lại.
-      **Cần chủ project quyết, agent không tự quyết được.**
 - [ ] **TS-5** Đưa bản gốc logo `1024x1024` vào `assets/brand/tsudev-logo.png` của
       `tsudev-cwico` (bản đang có chỉ `222x280`, đang bị phóng to lên 512 để sinh
       icon), đổi tên theo `docs/BRAND_ASSETS.md` mục 3, chạy lại `tools/gen_icons.py`.
@@ -32,6 +17,12 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **TS-2 + TS-3 + TS-4** (`v2.5.0`, nhánh `docs/duyet-pr-va-gitignore-go-java`).
+  - TS-2: `docs/GIT_WORKFLOW.md` mục 2 và 4.4 - số người duyệt PR theo quy mô đội.
+    Cấu hình thật của repo này (`0` duyệt) nay khớp tài liệu.
+  - TS-3: `templates/gitignore/go.gitignore` và `java.gitignore`, đăng ký ở
+    `docs/GITIGNORE_POLICY.md` mục 2.
+  - TS-4: đã quyết, xem mục "Quyết định quan trọng".
 - 24/08/2026 - **TS-1: bổ sung `docs/BRAND_ASSETS.md`** (`v2.4.0`, nhánh
   `docs/brand-assets`, chưa push - chờ chủ project mở PR). Chuẩn rút từ bộ tài sản
   đang chạy thật của `tsudev-cwico`. Đăng ký lối vào ở `AGENTS.md`, `docs/00-INDEX.md`,
@@ -66,6 +57,21 @@
   phát hiện sửa trộm thật sự là `sync-standards.sh --check`. Ba lỗi liên tiếp
   (`v2.2.1`, `v2.2.2`, và lần hỏng `rm -rf`) đều đến từ việc coi quyền file là lớp
   bảo vệ chính.
+- 24/08/2026 - **`sumy-wedding` KHÔNG thuộc hệ sinh thái tsudev** (TS-4, đã quyết,
+  phiên sau không hỏi lại). Đó là trang thiệp cưới cá nhân cho một sự kiện một
+  lần, Private, không mang nhận diện tsudev, không có người dùng ngoài, và đã ngủ
+  từ 27/07/2026. `MUST NOT` đồng bộ `.standards/` xuống đó: bộ quy ước sẽ thêm
+  `logs/`, cổng kiểm CI và nghĩa vụ bàn giao cho một repo không có phiên làm việc
+  nào nữa - chi phí ròng, không lợi ích.
+  Ngoại lệ duy nhất, và là điều kiện của quyết định này: repo đó là Next.js có
+  Prisma và lưu dữ liệu khách mời (mức **D2** theo `SECURITY_BASELINE.md` mục 2),
+  nên nếu **mở lại để sửa**, việc đầu tiên `MUST` là ghép
+  `templates/gitignore/base.gitignore` + `node.gitignore` và soát `.env` chưa lọt
+  vào lịch sử git. Không đồng bộ toàn bộ quy ước, chỉ đúng phần đó.
+- 24/08/2026 - **Số người duyệt PR phụ thuộc quy mô đội, không phải hằng số.**
+  Repo một người `MUST` đặt `0` vì GitHub không cho tự duyệt; phần chặn thật là
+  cổng kiểm bắt buộc + áp cả với admin, không phải con số duyệt. Chi tiết:
+  `docs/GIT_WORKFLOW.md` mục 4.4.
 - 24/08/2026 - **Màu thương hiệu tách khỏi token giao diện.** Xanh `tsu` và cam
   `dev` lấy mẫu từ logo, chỉ dùng cho phần nhận diện, `MUST NOT` ghi đè token ngữ
   nghĩa trong `tokens/design-tokens.json`. Kèm theo: bộ quy ước trung tâm không giữ

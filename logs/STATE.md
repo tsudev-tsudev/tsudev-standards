@@ -5,11 +5,7 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-- [ ] **TS-7** Xuất lại dấu hiệu thu gọn độ phân giải cao cho `tsudev-cwico`. Bản
-      đang có ở `assets/brand/tsudev-logo.png` chỉ `222x280` trong khi
-      `tools/gen_icons.py` sinh icon tới 512 - tức icon đang được phóng to từ nguồn
-      nhỏ hơn. Xuất từ bản gốc `2048x2048` của `tsudev/packages/brand/source/`.
-      **Không đổi nhận diện, chỉ đổi độ phân giải.** Việc nằm ở repo con.
+(trống - hàng đợi đã cạn)
 
 ## Đang thực hiện
 
@@ -18,6 +14,12 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **TS-7 xong, hàng đợi cạn.** `tsudev-cwico` #9: xuất lại dấu hiệu
+  thu gọn từ bản gốc `2048x2048` bằng đúng thuật toán của `build-assets.js`, sinh
+  lại 26 icon. Nguồn `222x280` lên `824x1083`, IoU so với bản cũ **0.9553** - không
+  đổi nhận diện, chỉ đổi độ phân giải. `v2.7.0` đã đồng bộ xuống cả 4 repo con
+  (`tsudev` #65, `swico` #6, `tsudev-cwico` #10, `tsudev-contact` #4).
+  Chi tiết: `logs/handover/20260824-04_nhan-dien-thuc-te.md`.
 - 24/08/2026 - **`v2.7.0`: sửa lỗi nội dung của `v2.4.0` và `v2.6.0` về bộ nhận
   diện.** `tsudev-cwico` chưa bao giờ lệch chuẩn - con cú của nó và `logo-mark.png`
   trên tsudev.com là cùng một tác phẩm (IoU 0.957). Bản gốc thật là

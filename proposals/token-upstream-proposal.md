@@ -1,5 +1,13 @@
 # Đề xuất đẩy ngược lên repo token trung tâm
 
+> **TRẠNG THÁI: ĐÃ NHẬN vào bộ quy ước v2.0.0 ngày 24/08/2026.**
+> Cả hai phần A và B đã được áp dụng vào `tokens/design-tokens.json`. Cổng canh
+> `scripts/check-contrast.mjs` nay chặn merge nếu bảng token vi phạm lại chính
+> quy tắc này. Xem `CHANGELOG.md` mục 2.0.0 "Thay đổi phá vỡ" và hướng dẫn nâng cấp.
+> File này giữ lại làm hồ sơ quyết định - đừng sửa nội dung đề xuất.
+
+---
+
 > **Trạng thái**: chờ gửi. Repo token trung tâm không nằm trong repo này, nên file
 > này là gói bàn giao - đủ để dán thẳng vào issue/PR bên đó mà không phải đo lại.
 >

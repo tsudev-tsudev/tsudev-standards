@@ -1,0 +1,63 @@
+name: Xin ngoại lệ
+description: Xin cho một project được đi ra ngoài quy ước, có thời hạn
+title: '[Ngoại lệ] '
+labels: [exception]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ngoại lệ luôn xảy ra và không sao cả. Vấn đề là ngoại lệ **không được ghi
+        lại**. Xem `exceptions/README.md` trước khi điền.
+
+  - type: input
+    id: repo
+    attributes:
+      label: Repo xin ngoại lệ
+    validations:
+      required: true
+
+  - type: input
+    id: rule
+    attributes:
+      label: Quy ước bị lệch
+      placeholder: docs/LANGUAGE_SELECTION.md mục 2.1
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Vì sao quy ước không đáp ứng được
+      description: Các lựa chọn đúng quy ước đã thử là gì, hỏng ở đâu?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative
+    attributes:
+      label: Cách làm thay thế
+    validations:
+      required: true
+
+  - type: textarea
+    id: risk
+    attributes:
+      label: Rủi ro và cách giảm thiểu
+      description: Ai bảo trì được? Nếu người đó nghỉ thì sao? Bảo mật có bị ảnh hưởng?
+    validations:
+      required: true
+
+  - type: input
+    id: expiry
+    attributes:
+      label: Hết hiệu lực
+      description: Ngày DD/MM/YYYY hoặc điều kiện chấm dứt. Ngoại lệ vô thời hạn sẽ bị từ chối.
+    validations:
+      required: true
+
+  - type: textarea
+    id: plan
+    attributes:
+      label: Kế hoạch quay về đúng quy ước
+    validations:
+      required: true

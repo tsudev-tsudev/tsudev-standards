@@ -1,0 +1,41 @@
+name: Cổng kiểm quy ước
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Đặc quyền tối thiểu - SECURITY_BASELINE.md mục 5
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Kiểm quy ước, token, tương phản
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lấy mã nguồn
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Cài Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '20'
+
+      - name: tokens.css phải khớp design-tokens.json
+        run: node scripts/build-tokens.mjs --check
+
+      - name: Mọi cặp màu phải đạt ngưỡng WCAG
+        run: node scripts/check-contrast.mjs
+
+      - name: Cổng kiểm quy ước
+        run: ./scripts/check-standards.sh
+
+      - name: Script phải chạy được trên shell chuẩn
+        run: |
+          for f in scripts/*.sh; do
+            bash -n "$f" || exit 1
+          done

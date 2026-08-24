@@ -1,0 +1,31 @@
+# Chuẩn hóa kết thúc dòng: repo luôn lưu LF, checkout theo hệ điều hành.
+* text=auto eol=lf
+
+*.sh      text eol=lf
+*.bash    text eol=lf
+*.ps1     text eol=crlf
+*.bat     text eol=crlf
+*.cmd     text eol=crlf
+
+*.md      text eol=lf
+*.json    text eol=lf
+*.css     text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+
+# Nhị phân: không bao giờ diễn dịch lại ký tự
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.webp    binary
+*.gif     binary
+*.ico     binary
+*.pdf     binary
+*.woff    binary
+*.woff2   binary
+*.ttf     binary
+*.otf     binary
+*.zip     binary
+
+# File không tính vào thống kê ngôn ngữ của GitHub
+docs/**   linguist-documentation

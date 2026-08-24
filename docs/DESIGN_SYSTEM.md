@@ -1,8 +1,11 @@
-# QUY ƯỚC GIAO DIỆN TOÀN PROJECT (DESIGN SYSTEM) - v1.0.0
+# QUY ƯỚC GIAO DIỆN TOÀN PROJECT (DESIGN SYSTEM) - v2.0.0
 
 > Áp dụng cho MỌI website, tool, phần mềm desktop (Electron/C#/Python/C++), app trong hệ sinh thái.
-> Nguồn giá trị duy nhất: `tokens/design-tokens.json` (Web/Electron dùng `tokens/tokens.css`).
+> Nguồn giá trị duy nhất: `tokens/design-tokens.json`.
+> `tokens/tokens.css` là bản **sinh tự động** từ file JSON - KHÔNG sửa tay, sinh lại bằng
+> `node scripts/build-tokens.mjs`.
 > Cấm hard-code màu/cỡ chữ/radius trong source code - chỉ dùng token.
+> Quy tắc khả năng truy cập đầy đủ: [`ACCESSIBILITY.md`](ACCESSIBILITY.md).
 
 ## 1. Hệ màu & 3 chế độ nền (Adaptive Light)
 
@@ -13,16 +16,38 @@ Màu chủ đạo: **Blue**. Nền là blue nhạt dịu mắt, bề mặt (moda
 | Nền chính `bg-base` | `#EEF4FB` | `#F6F1E6` | `#0F1B2D` |
 | Bề mặt modal/card `bg-surface` | `#FFFFFF` | `#FCF8EF` | `#16263C` |
 | Nền phụ/hover `bg-subtle` | `#E3EDF8` | `#EFE8D9` | `#1C2F4A` |
-| Viền `border` / đậm | `#C9D9EC` / `#9FB8D4` | `#DCD1BA` / `#BCAE90` | `#2C4363` / `#3F5B80` |
+| Viền trang trí `border` / `border-strong` | `#C9D9EC` / `#9FB8D4` | `#DCD1BA` / `#BCAE90` | `#2C4363` / `#3F5B80` |
+| Viền vùng tương tác `border-control` | `#74899F` | `#8E8064` | `#6E88AE` |
 | Chữ chính `text-primary` | `#1C2B3A` | `#2E2A21` | `#E6EDF5` |
 | Chữ phụ `text-secondary` | `#44607C` | `#5B5342` | `#A9BBD0` |
+| Chữ mờ `text-muted` | `#52627A` | `#5E5646` | `#9BB0C9` |
 | Link `text-link` | `#1D4ED8` | `#1A56B8` | `#7FB2F7` |
 | Nút chính `primary` | `#2563EB` | `#1E5FC2` | `#66A3F2` |
 | Chữ trên nút `on-primary` | `#FFFFFF` | `#FFFFFF` | `#0C1930` |
 | Success / Warning / Danger / Info | `#15803D` `#B45309` `#DC2626` `#0369A1` | `#1B6E38` `#9A4A07` `#BE2020` `#0B5E86` | `#4ADE80` `#FBBF24` `#F87171` `#38BDF8` |
 
+**Hai vai trò viền, đừng gộp làm một.** `border-strong` là ranh giới **trang trí**
+(đường chia khối, nét mảnh của card): không mang thông tin thao tác, WCAG không đòi
+3:1, và kéo nó đậm lên làm giao diện nặng nề. `border-control` là ranh giới **vùng
+tương tác** (viền nút phụ, viền ô nhập): chính nó nói cho người dùng biết bấm hay gõ
+được ở đâu, nên 3:1 là bắt buộc. Dùng nhầm vai trò là lỗi, không phải chuyện thẩm mỹ.
+
 **Quy tắc bắt buộc:**
-- Mọi cặp chữ/nền đạt WCAG 2.1 AA ≥ **4.5:1** (chữ chính trên nền đạt ≥ 10:1 ở cả 3 chế độ). `text-muted` chỉ dùng cho thông tin phụ không thiết yếu.
+- Ngưỡng tương phản, đo trên đúng các cặp mà giao diện thật sinh ra, ở **cả ba** chế độ:
+
+  | Token | Nền đối chiếu | Ngưỡng | Căn cứ |
+  | --- | --- | --- | --- |
+  | `text-primary` | `bg-base`, `bg-surface`, `bg-subtle` | ≥ 10:1 | Mục tiêu nội bộ, trên mức AAA |
+  | `text-primary` | `bg-hover` | ≥ 7:1 | WCAG AAA. Nền hover là trạng thái tạm thời của một hàng |
+  | `text-secondary`, `text-muted`, `text-link` | cả 4 nền | ≥ 4.5:1 | WCAG 2.1 AA cho chữ thường |
+  | `border-control`, `focus-ring` | `bg-base`, `bg-surface`, `bg-subtle` | ≥ 3:1 | WCAG 1.4.11 cho ranh giới thành phần |
+  | `on-primary`, `on-status` | nền tương ứng | ≥ 4.5:1 | WCAG 2.1 AA |
+
+- **Cổng canh:** `node scripts/check-contrast.mjs` chạy trong CI của repo trung tâm và
+  chặn merge khi có cặp trượt. Quy tắc không có cổng canh chỉ là câu chữ - bảng token
+  v1.0.0 từng vi phạm chính mục này ở `text-muted` suốt ba chế độ mà không ai phát hiện.
+- `text-muted` chỉ dùng cho thông tin phụ không thiết yếu, nhưng vẫn là **chữ thường**
+  nên ngưỡng là 4.5:1, không phải 3:1.
 - Chọn chế độ mặc định theo hệ điều hành (`prefers-color-scheme`), người dùng đổi thủ công thì **lưu lại lựa chọn** (localStorage/config file). Warm Mode là lựa chọn thủ công, khuyến nghị hiển thị gợi ý khi phiên làm việc > 2 giờ.
 - Không dùng trắng tuyệt đối `#FFFFFF` làm `bg-base` và không dùng đen tuyệt đối `#000000` ở bất kỳ chế độ nào (giảm chói/mỏi mắt).
 - Màu trạng thái không đứng một mình: luôn kèm icon hoặc chữ (hỗ trợ người mù màu).
@@ -88,6 +113,9 @@ Viền luôn **phẳng 1px solid** màu `border` (viền được focus/hover d�
 
 ## 6. Quy ước tên phiên bản phát hành (app/tool/phần mềm - KHÔNG áp dụng website)
 
+> Quy ước đầy đủ cho cả ba khuôn phiên bản của hệ sinh thái (bộ quy ước, app, website)
+> nằm ở [`VERSIONING.md`](VERSIONING.md). Mục này giữ lại phần dùng thường xuyên nhất.
+
 Định dạng: `{ten-app}_{YY}.{M}.{DD}{NN}_{arch}-setup.{ext}`
 
 - `YY` = 2 số cuối năm; `M` = tháng **không** số 0 đầu; `DD` = ngày 2 chữ số; `NN` = số thứ tự phát hành **trong ngày**, bắt đầu `01`.
@@ -110,4 +138,15 @@ Chuỗi version trong code/manifest = `26.8.1901` (đồng bộ với tên file)
 | Python (PyQt/Tkinter) | Parse JSON → sinh QSS/style dict |
 | C++ (Qt) | Parse JSON → biến QSS |
 
-Quy trình đổi giao diện: **chỉ sửa `design-tokens.json`** → đồng bộ sang `tokens.css` (thứ tự khai báo giữ 1:1) → toàn bộ hệ sinh thái tự cập nhật ở lần build/khởi động kế tiếp.
+Quy trình đổi giao diện:
+
+1. **Chỉ sửa `tokens/design-tokens.json`** - đây là nguồn chân lý duy nhất.
+2. Chạy `node scripts/build-tokens.mjs` để sinh lại `tokens/tokens.css`.
+3. Chạy `node scripts/check-contrast.mjs` - phải đạt toàn bộ.
+4. Chạy `./scripts/make-manifest.sh` rồi `./scripts/check-standards.sh`.
+5. Tăng phiên bản theo [`VERSIONING.md`](VERSIONING.md) mục 1 - **đổi giá trị một token
+   màu đang có luôn là thay đổi phá vỡ (MAJOR)**, kể cả khi chỉ để sửa lỗi.
+6. Repo con chạy `./scripts/sync-standards.sh` và tự cập nhật ở lần build kế tiếp.
+
+`MUST NOT` sửa tay `tokens.css`. Mọi thay đổi ở đó sẽ bị lần sinh sau ghi đè, và cổng
+kiểm sẽ báo lệch.

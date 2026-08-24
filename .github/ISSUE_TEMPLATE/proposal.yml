@@ -1,0 +1,74 @@
+name: Đề xuất quy ước
+description: Đề nghị thêm, sửa, hoặc bỏ một quy ước trung tâm
+title: '[Đề xuất] '
+labels: [proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Đề xuất bị từ chối nhiều nhất là loại chỉ nói "nên đổi X thành Y".
+        Xin điền đủ bốn phần dưới. Xem `proposals/` để biết mức chi tiết mong đợi.
+
+  - type: input
+    id: target
+    attributes:
+      label: Quy ước liên quan
+      description: Đường dẫn file và mục cụ thể
+      placeholder: docs/DESIGN_SYSTEM.md mục 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Vấn đề cụ thể
+      description: Quy ước hiện tại làm hỏng việc gì, ở repo nào, trong tình huống nào?
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Số đo hoặc bằng chứng
+      description: |
+        Không phải cảm nhận. Token màu thì là tỉ số tương phản; hiệu năng thì là
+        con số đo được; cấu trúc thì là ví dụ thật đang lệch.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Đề xuất cụ thể
+      description: Viết đúng câu chữ sẽ đưa vào quy ước, không mô tả chung chung.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Mức thay đổi
+      options:
+        - PATCH - làm rõ câu chữ, không đổi nghĩa
+        - MINOR - bổ sung thuần
+        - MAJOR - phá vỡ, repo con phải sửa mã
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Ảnh hưởng tới repo con
+      description: Ai phải sửa gì, mất bao lâu?
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Xác nhận
+      options:
+        - label: Đề xuất này không làm phát sinh chi phí ngoài hạn mức 0 đồng
+          required: true
+        - label: Tôi đã đọc tài liệu liên quan và đây không phải hiểu nhầm quy ước
+          required: true

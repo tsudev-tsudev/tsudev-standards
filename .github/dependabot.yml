@@ -1,0 +1,20 @@
+# Dependabot - cảnh báo và vá phụ thuộc. Miễn phí.
+# Quy ước xử lý: SECURITY_BASELINE.md mục 4.4 (Nghiêm trọng/Cao trong 7 ngày).
+version: 2
+
+updates:
+  # Repo này không có phụ thuộc runtime; chỉ theo dõi GitHub Action,
+  # vốn là bề mặt tấn công chuỗi cung ứng thật của một repo chỉ chứa tài liệu.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '01:00'
+      timezone: Asia/Ho_Chi_Minh
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(deps)'
+    labels:
+      - dependencies
+      - security

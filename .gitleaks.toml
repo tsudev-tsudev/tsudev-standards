@@ -1,0 +1,42 @@
+# gitleaks - quét secret trong mã nguồn và lịch sử git (miễn phí, mã nguồn mở)
+# Chạy cục bộ: gitleaks detect --config .gitleaks.toml --redact --verbose
+# Chạy trên diễn biến của PR: xem .github/workflows/security-scan.yml
+# Quy ước đầy đủ: docs/SECURITY_BASELINE.md mục 4.
+
+title = "tsudev secret scanning"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "tsudev-generic-api-key"
+description = "Chuỗi giống API key/token đặt trong mã nguồn"
+regex = '''(?i)(api[_-]?key|api[_-]?secret|access[_-]?token|auth[_-]?token|client[_-]?secret|private[_-]?key)["'\s]*[:=]["'\s]*[0-9a-zA-Z\-_\.]{20,}'''
+tags = ["key", "generic"]
+
+[[rules]]
+id = "tsudev-connection-string"
+description = "Chuỗi kết nối có sẵn mật khẩu"
+regex = '''(?i)(postgres|postgresql|mysql|mongodb(\+srv)?|redis|amqp|mssql)://[^\s:@/]+:[^\s:@/]+@'''
+tags = ["database"]
+
+[[rules]]
+id = "tsudev-vn-pii"
+description = "Dữ liệu cá nhân Việt Nam bị hardcode (CCCD, số định danh)"
+regex = '''(?i)(cccd|cmnd|so[_-]?dinh[_-]?danh)["'\s]*[:=]["'\s]*[0-9]{9,12}'''
+tags = ["pii"]
+
+[allowlist]
+description = "Đường dẫn và giá trị mẫu được phép"
+paths = [
+  '''\.env\.example$''',
+  '''\.env\.sample$''',
+  '''(^|/)templates/''',
+  '''(^|/)docs/''',
+  '''(^|/)tokens/''',
+  '''\.gitleaks\.toml$''',
+  '''(^|/)MANIFEST\.sha256$''',
+]
+regexes = [
+  '''(?i)(example|sample|placeholder|dummy|changeme|your[_-]?(key|token|secret)|xxxx+|<[a-z_-]+>)''',
+]

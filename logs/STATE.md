@@ -25,6 +25,10 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **`v2.6.0` đã đồng bộ xuống cả 4 repo con.** `tsudev` #64,
+  `swico` #5, `tsudev-cwico` #8, `tsudev-contact` #3 - đều `version=2.6.0`, đã xác
+  minh bằng clone mới, CI `main` xanh. Chi tiết phiên:
+  `logs/handover/20260824-03_ban-goc-dau-hieu.md`.
 - 24/08/2026 - **`v2.6.0`: đưa bản gốc dấu hiệu vào repo và sửa lại nội dung sai
   của `v2.4.0`.** `assets/brand/tsudev-logo.png` nay là bản gốc chính thức, nằm
   ngoài bộ đồng bộ nên repo con không tải thêm byte nào. Phát hiện quan trọng:

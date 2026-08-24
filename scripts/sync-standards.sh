@@ -96,6 +96,9 @@ if [[ "$CHECK_ONLY" == "1" ]]; then
 fi
 
 # --- Ghi đè thư mục đích ---
+# Lần đồng bộ trước đã đặt thư mục thành chỉ-đọc, nên phải mở quyền ghi lại
+# trước khi xóa. Thiếu bước này thì lần đồng bộ THỨ HAI trở đi sẽ thất bại.
+[[ -d "$DEST" ]] && chmod -R u+w "$DEST"
 rm -rf "$DEST"
 mkdir -p "$DEST"
 for item in AGENTS.md VERSION SECURITY.md MANIFEST.sha256 docs tokens templates; do

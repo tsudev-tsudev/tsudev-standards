@@ -8,6 +8,51 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.5.0 - 24/08/2026
+
+Bổ sung thuần và một chỗ sửa tài liệu đang lệch cấu hình thật. Đồng bộ được ngay,
+không cần sửa mã.
+
+### Sửa lỗi
+
+- `docs/GIT_WORKFLOW.md` **mục 2 và mục 4.4 - số người duyệt PR**. Checklist bảo
+  vệ nhánh ghi "tối thiểu 1 người duyệt" mà không phân biệt quy mô đội. GitHub
+  **không cho tự duyệt PR của chính mình**, nên repo một người đặt `1` là **tự
+  khóa hoàn toàn**: PR không bao giờ đủ điều kiện merge, và cách duy nhất đi tiếp
+  là tắt bảo vệ nhánh - tức là mất luôn cả phần chặn thật.
+
+  Chính repo này đang phải đặt `required_approving_review_count = 0` để không bế
+  tắc, tức là tài liệu và cấu hình thật đã lệch nhau từ `v2.0.0`.
+
+  Nay mục 4.4 có bảng rõ ràng: từ 2 người trở lên thì **1** duyệt, một người thì
+  **0** duyệt. Kèm điều kiện: đặt `0` `MUST NOT` hiểu là bỏ rà soát - vẫn bắt buộc
+  mở PR, cổng kiểm xanh, giải quyết hết thảo luận, và **áp cả với admin**. Và khi
+  repo có người thứ hai ghi được thì `MUST` nâng lại thành `1` ngay trong ngày cấp
+  quyền.
+
+  Ghi chú trung thực: hàng đợi mô tả lỗi này nằm ở mục 4.4, nhưng câu sai thật sự
+  nằm ở checklist mục 2. Đã sửa cả hai chỗ cho khớp nhau.
+
+### Thêm mới
+
+- `templates/gitignore/go.gitignore` và `templates/gitignore/java.gitignore`.
+  `LANGUAGE_SELECTION.md` mục 2.1 xếp Java (Spring Boot) mức ⭐ và Go mức ✅ nhưng
+  bộ mẫu chưa có - cùng loại thiếu sót với `rust.gitignore` đã vá ở `v2.1.0`.
+
+  Hai điểm đáng chú ý trong bản mẫu Go: Go build ra **file không có đuôi nằm ngay
+  cạnh mã nguồn**, không mẫu chung nào bắt được chúng mà không bắt oan, nên bản
+  mẫu chốt quy ước `go build -o bin/...` thay vì cố liệt kê; và `go.work` là cấu
+  hình **cục bộ từng máy**, `MUST NOT` commit.
+
+  Bản mẫu Java giữ lại `mvnw`, `maven-wrapper.properties` và `gradle-wrapper.jar`
+  (chúng ghim phiên bản build cho mọi máy và cho CI), chặn
+  `application-{local,dev,prod}.*` nhưng chừa `application-*.example.*`.
+
+  Cả hai đã qua cổng kiểm mục 6b - không bản mẫu nào chặn file bắt buộc.
+- `docs/GITIGNORE_POLICY.md` mục 2: thêm hai dòng ghép cho Go và Java.
+
+---
+
 ## 2.4.0 - 24/08/2026
 
 Bổ sung thuần. Đồng bộ được ngay, không cần sửa mã.

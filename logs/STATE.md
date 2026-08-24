@@ -14,6 +14,9 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **`v2.8.0` đã đồng bộ xuống cả 4 repo con** (`tsudev` #67,
+  `swico` #7, `tsudev-cwico` #11, `tsudev-contact` #5). Chi tiết phiên:
+  `logs/handover/20260824-05_logo-ban-dark.md`.
 - 24/08/2026 - **Bản logo cho nền tối** (`tsudev` #66, quy ước `v2.8.0`).
   `logo-full-dark.png` và `logo-wordmark-dark.png` sinh từ chính dây chuyền
   `packages/brand/build-assets.js`: mực navy đổi sang trắng (1.38:1 lên 17.28:1),

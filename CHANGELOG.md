@@ -8,6 +8,26 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.2.2 - 24/08/2026
+
+Bản vá tài liệu. Không đổi mã.
+
+### Sửa lỗi
+
+- `docs/SYNC.md` mục 3 hướng dẫn `cp` file mẫu từ `.standards/templates/logs/`
+  ra `logs/`, nhưng file trong `.standards/` là chỉ-đọc và `cp` **giữ nguyên
+  quyền đó**. Repo làm đúng theo hướng dẫn sẽ có `logs/STATE.md` không ghi được
+  - tức là agent không cập nhật được trạng thái ở cuối phiên, và phiên sau mất
+  toàn bộ ngữ cảnh bàn giao. Đây là hỏng đúng cơ chế mà `AGENT_PROTOCOL.md`
+  dựa vào.
+
+  Bổ sung `chmod u+w logs/STATE.md logs/LOCKS.md` vào quy trình, kèm cảnh báo ở
+  `docs/ONBOARDING.md` mục 1.3 và một dòng xử lý sự cố ở `docs/SYNC.md` mục 8.
+
+Phát hiện khi đồng bộ xuống repo `tsudev-cwico`.
+
+---
+
 ## 2.2.1 - 24/08/2026
 
 Bản vá **quan trọng**. Nên nâng cấp ngay nếu đã đồng bộ bằng bản 2.0.0 đến 2.2.0.

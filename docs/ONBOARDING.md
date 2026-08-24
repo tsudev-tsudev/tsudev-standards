@@ -61,6 +61,11 @@ biết ngay khi lệch.
 
 Xem [`SYNC.md`](SYNC.md) mục 3 - toàn bộ các bước đã viết sẵn thành lệnh dán được.
 
+> **Bẫy hay gặp:** file trong `.standards/` là chỉ-đọc, và `cp` giữ nguyên quyền đó.
+> Sau khi chép mẫu `logs/STATE.md` và `logs/LOCKS.md` ra, `MUST` chạy
+> `chmod u+w logs/STATE.md logs/LOCKS.md` - nếu không, agent sẽ không ghi được
+> trạng thái ở cuối phiên và phiên sau mất toàn bộ ngữ cảnh bàn giao.
+
 ### 1.4. Xử lý `.gitignore` khi repo đã có sẵn
 
 `MUST NOT` ghi đè. `MUST` **gộp**: giữ nguyên phần cũ, thêm những dòng của bản

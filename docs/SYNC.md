@@ -50,9 +50,12 @@ cat .standards/templates/gitignore/base.gitignore > .gitignore
 cat .standards/templates/gitignore/node.gitignore >> .gitignore   # đúng ngôn ngữ của repo
 
 # 4. Dựng thư mục phối hợp giữa các phiên
+# LƯU Ý: file trong .standards/ là chỉ-đọc, và `cp` giữ nguyên quyền đó.
+# Không mở lại quyền ghi thì agent không cập nhật được STATE.md ở cuối phiên.
 mkdir -p logs/handover
 cp .standards/templates/logs/STATE.md logs/STATE.md
 cp .standards/templates/logs/LOCKS.md logs/LOCKS.md
+chmod u+w logs/STATE.md logs/LOCKS.md
 touch logs/handover/.gitkeep
 
 # 5. Lấy script cổng kiểm
@@ -173,4 +176,5 @@ biết repo cố ý đứng ở bản nào, chứ không phải quên nâng.
 | `LỆCH: .standards/... khác bản trung tâm` | Có người sửa bản sao chỉ-đọc | Chạy `./scripts/sync-standards.sh`, đưa thay đổi lên `proposals/` |
 | `thiếu .standards-version` | Chép tay thay vì chạy script | Chạy `./scripts/sync-standards.sh` |
 | Không ghi được vào `.standards/` | File đã bị đặt chỉ-đọc sau khi đồng bộ | Đúng như thiết kế. Đừng `chmod` để sửa, hãy sửa ở trung tâm |
+| `Permission denied` khi agent ghi `logs/STATE.md` | File được `cp` từ `.standards/templates/` nên thừa hưởng quyền chỉ-đọc | `chmod u+w logs/STATE.md logs/LOCKS.md` |
 | `git checkout` báo `unable to unlink '.standards/...'` | Cây cũ đồng bộ bằng bản trước v2.2.1 bị đặt chỉ-đọc cả **thư mục** | `chmod -R u+w .standards` một lần, rồi `./scripts/sync-standards.sh` để lấy bản đã vá |

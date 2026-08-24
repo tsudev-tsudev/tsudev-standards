@@ -8,6 +8,41 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.3.1 - 24/08/2026
+
+Bản vá **quan trọng cho repo .NET**.
+
+### Sửa lỗi
+
+- `templates/gitignore/dotnet.gitignore` có dòng `[Ll]ogs/` chặn **cả thư mục**
+  `logs/` - đúng thư mục điều phối phiên mà `AGENT_PROTOCOL.md` bắt buộc phải
+  commit. Bản mẫu của chính bộ quy ước mắc đúng lỗi mà `GITIGNORE_POLICY.md`
+  mục 5 cảnh báo.
+
+  Repo `swico` áp bản mẫu này và mất `.standards/templates/logs/*` khỏi bản sao
+  quy ước mà không có cảnh báo nào - cho tới khi cổng kiểm mục 3b của v2.3.0 chỉ
+  ra. Nay đổi thành `[Ll]ogs/*.log` và `[Ll]ogs/*.txt`.
+
+### Thêm mới
+
+- **Cổng kiểm mục 6b** (chỉ ở repo trung tâm): dựng thử một repo cho **từng** bản
+  mẫu `.gitignore`, xác nhận không bản nào chặn `logs/STATE.md`, `logs/LOCKS.md`,
+  hay file trong `.standards/`. Cổng canh để lỗi trên không tái diễn khi ai đó
+  thêm bản mẫu mới.
+
+  Đã chạy trên cả 7 bản mẫu hiện có: đều sạch.
+
+### Repo .NET cần làm gì
+
+```bash
+./scripts/sync-standards.sh --ref v2.3.1
+```
+
+Rồi kiểm `.gitignore` của repo còn dòng `[Ll]ogs/` không; nếu còn thì thu hẹp
+thành `[Ll]ogs/*.log`.
+
+---
+
 ## 2.3.0 - 24/08/2026
 
 Bổ sung một cổng canh cho lỗi im lặng nguy hiểm nhất tìm được cho tới nay.

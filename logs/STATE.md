@@ -8,7 +8,8 @@
 - [ ] **TS-5** Đưa bản gốc logo `1024x1024` vào `assets/brand/tsudev-logo.png` của
       `tsudev-cwico` (bản đang có chỉ `222x280`, đang bị phóng to lên 512 để sinh
       icon), đổi tên theo `docs/BRAND_ASSETS.md` mục 3, chạy lại `tools/gen_icons.py`.
-      Việc nằm ở repo con, không phải repo này. Nguồn: `BRAND_ASSETS.md` mục 11.
+      Việc nằm ở repo con, không phải repo này. Nguồn: `BRAND_ASSETS.md` mục 11,
+      các bước cụ thể ở phiếu `20260824-02` mục 2. Cần `pip install Pillow`.
 
 ## Đang thực hiện
 
@@ -17,6 +18,11 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **Phát hành `v2.4.0` + `v2.5.0` và đồng bộ xuống cả 4 repo con.**
+  Chi tiết: `logs/handover/20260824-02_phat-hanh-v24-v25-va-dong-bo.md`. Tóm tắt:
+  hàng đợi TS-1 đến TS-4 cạn hết; 2 nhãn, 2 Release, PR #14 và #16 ở repo này;
+  `tsudev` #63, `swico` #4, `tsudev-cwico` #7, `tsudev-contact` #2 - cả 4 đã ở
+  `.standards-version` `2.5.0`, đã xác minh bằng clone mới, CI `main` xanh.
 - 24/08/2026 - **TS-2 + TS-3 + TS-4** (`v2.5.0`, nhánh `docs/duyet-pr-va-gitignore-go-java`).
   - TS-2: `docs/GIT_WORKFLOW.md` mục 2 và 4.4 - số người duyệt PR theo quy mô đội.
     Cấu hình thật của repo này (`0` duyệt) nay khớp tài liệu.

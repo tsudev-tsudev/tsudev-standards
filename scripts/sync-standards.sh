@@ -98,7 +98,7 @@ fi
 # --- Ghi đè thư mục đích ---
 # Lần đồng bộ trước đã đặt thư mục thành chỉ-đọc, nên phải mở quyền ghi lại
 # trước khi xóa. Thiếu bước này thì lần đồng bộ THỨ HAI trở đi sẽ thất bại.
-[[ -d "$DEST" ]] && chmod -R u+w "$DEST"
+[[ -d "$DEST" ]] && chmod -R u+w "$DEST"   # gồm cả cây cũ bị đặt a-w toàn bộ
 rm -rf "$DEST"
 mkdir -p "$DEST"
 for item in AGENTS.md VERSION SECURITY.md MANIFEST.sha256 docs tokens templates; do
@@ -106,7 +106,16 @@ for item in AGENTS.md VERSION SECURITY.md MANIFEST.sha256 docs tokens templates;
 done
 
 # Đánh dấu chỉ-đọc để không ai sửa nhầm bản sao thay vì sửa ở trung tâm.
-chmod -R a-w "$DEST" 2>/dev/null || true
+#
+# CHỈ đặt cho FILE, KHÔNG đặt cho thư mục. Thư mục không có quyền ghi thì git
+# không unlink được file bên trong: `git checkout` sang nhánh khác vẫn báo thành
+# công nhưng bỏ sót file, để lại cây làm việc lệch với nhánh và rác chặn mọi lần
+# checkout sau. `git clean` và `rm -rf` cũng hỏng theo.
+#
+# Lớp chặn này chỉ là rào chắn nhẹ, và git sẽ trả lại quyền ghi sau mỗi lần
+# checkout. Cơ chế phát hiện sửa trộm thật sự là `sync-standards.sh --check`
+# và `check-standards.sh`, không phải quyền file.
+find "$DEST" -type f -exec chmod a-w {} + 2>/dev/null || true
 
 COMMIT="$("${FETCH[@]}" "https://api.github.com/repos/${REPO}/commits/${REF}" 2>/dev/null \
   | sed -n 's/.*"sha"[[:space:]]*:[[:space:]]*"\([0-9a-f]\{40\}\)".*/\1/p' | head -1 || true)"

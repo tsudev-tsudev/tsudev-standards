@@ -8,6 +8,42 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.2.1 - 24/08/2026
+
+Bản vá **quan trọng**. Nên nâng cấp ngay nếu đã đồng bộ bằng bản 2.0.0 đến 2.2.0.
+
+### Sửa lỗi
+
+- `scripts/sync-standards.sh` đặt chỉ-đọc cho **cả thư mục** `.standards/`, không
+  chỉ cho file. Thư mục không có quyền ghi thì git không unlink được file bên
+  trong, nên `git checkout` sang nhánh khác **báo thành công nhưng bỏ sót file**:
+
+  ```
+  warning: unable to unlink '.standards/docs/a.md': Permission denied
+  Switched to branch 'main'
+  ```
+
+  Hậu quả: cây làm việc lệch với nhánh mà không ai được báo lỗi, và file sót lại
+  thành rác chặn mọi lần checkout sau. `git clean` và `rm -rf` cũng hỏng theo.
+
+  Nay chỉ đặt chỉ-đọc cho file (`find -type f -exec chmod a-w`).
+
+### Nói lại cho đúng
+
+Quyền chỉ-đọc chỉ là **rào chắn nhẹ**: git trả lại quyền ghi sau mỗi lần
+checkout. Cơ chế phát hiện sửa trộm thật sự là `sync-standards.sh --check` và
+`check-standards.sh`, không phải quyền file. `docs/SYNC.md` mục 8 đã bổ sung
+cách xử lý cho cây đã lỡ đồng bộ bằng bản cũ.
+
+### Nếu đã đồng bộ bằng bản 2.0.0 đến 2.2.0
+
+```bash
+chmod -R u+w .standards
+./scripts/sync-standards.sh --ref v2.2.1
+```
+
+---
+
 ## 2.2.0 - 24/08/2026
 
 Bổ sung thuần. Đồng bộ được ngay, không cần sửa mã.

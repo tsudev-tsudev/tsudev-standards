@@ -8,6 +8,44 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.4.0 - 24/08/2026
+
+Bổ sung thuần. Đồng bộ được ngay, không cần sửa mã.
+
+### Thêm mới
+
+- `docs/BRAND_ASSETS.md` - tài sản thương hiệu lần đầu thuộc bộ quy ước: bộ file
+  tối thiểu, quy tắc đặt tên, biến thể theo nền sáng/tối, màu thương hiệu, kích
+  thước tối thiểu, vùng an toàn, cách sinh bộ icon, điều cấm, và checklist.
+
+  Chuẩn được rút ra từ bộ tài sản đang chạy thật của `tsudev-cwico`
+  (`assets/brand/`, `tools/gen_icons.py`, `ui/src/components/Brand.tsx`), không
+  phải nghĩ ra từ đầu.
+
+  Ba quyết định đáng chú ý:
+
+  1. **Wordmark dựng bằng chữ thật, không phải ảnh** (`SHOULD`). Hai `span` màu
+     khác nhau co giãn theo cỡ chữ hệ thống, sắc nét ở mọi DPI, chọn và tìm kiếm
+     được, tự đổi màu theo chế độ nền. PNG chỉ dành cho nơi không chạy được chữ.
+  2. **Màu thương hiệu KHÔNG phải token giao diện** (`MUST NOT` ghi đè token ngữ
+     nghĩa). Xanh `tsu` và cam `dev` chỉ dùng cho phần nhận diện; nút bấm, liên
+     kết, trạng thái vẫn đọc `tokens/design-tokens.json` như mọi nơi khác.
+  3. **Bộ quy ước trung tâm không giữ file ảnh.** `MANIFEST.sha256` băm từng byte
+     và repo con tải toàn bộ về, nên thêm ảnh vào đây là bắt bốn repo tải một thứ
+     chúng không dùng.
+
+  Tài liệu ghi kèm hai món nợ đã biết ở mục 11: bản gốc của `tsudev-cwico` chỉ
+  `222x280` (đang bị phóng to lên 512 để sinh icon), và bản gốc `1024x1024` đúng
+  chất lượng thì nằm rời ngoài mọi repo với tên sai quy ước.
+
+### Sửa kèm
+
+- `AGENTS.md` mục 1, `docs/00-INDEX.md`, `docs/DESIGN_SYSTEM.md` phần đầu: thêm
+  lối vào tài liệu mới.
+- `docs/PROJECT_STRUCTURE.md` hình trạng A: `assets/` nay ghi rõ có `brand/`.
+
+---
+
 ## 2.3.2 - 24/08/2026
 
 Bản vá tài liệu. Không đổi mã.

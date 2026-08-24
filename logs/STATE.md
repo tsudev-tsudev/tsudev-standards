@@ -5,12 +5,6 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-- [ ] **TS-1** Bổ sung `docs/BRAND_ASSETS.md`: logo, favicon, biến thể theo nền
-      sáng/tối, kích thước tối thiểu, vùng an toàn, quy tắc đặt tên file. Hiện tài
-      sản thương hiệu chưa thuộc quy ước nào - `logo-tsudev.png` 1.7MB đang nằm
-      ngoài mọi cấu trúc ở thư mục project cục bộ, và `tsudev-cwico` có sẵn thư mục
-      `assets/brand/` với biến thể sáng/tối để tham chiếu làm chuẩn.
-      Đây là `MINOR`.
 - [ ] **TS-2** Sửa `docs/GIT_WORKFLOW.md` mục 4.4. Quy ước đòi "tối thiểu 1 người
       duyệt", nhưng GitHub **không cho tự duyệt PR của mình**, nên repo một người
       sẽ tự khóa hoàn toàn. Branch protection của chính repo này đang phải đặt
@@ -26,6 +20,10 @@
       thuộc hệ sinh thái tsudev không. Nếu có thì đồng bộ bộ quy ước; nếu không thì
       ghi một dòng ở đây để phiên sau không hỏi lại.
       **Cần chủ project quyết, agent không tự quyết được.**
+- [ ] **TS-5** Đưa bản gốc logo `1024x1024` vào `assets/brand/tsudev-logo.png` của
+      `tsudev-cwico` (bản đang có chỉ `222x280`, đang bị phóng to lên 512 để sinh
+      icon), đổi tên theo `docs/BRAND_ASSETS.md` mục 3, chạy lại `tools/gen_icons.py`.
+      Việc nằm ở repo con, không phải repo này. Nguồn: `BRAND_ASSETS.md` mục 11.
 
 ## Đang thực hiện
 
@@ -34,6 +32,11 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **TS-1: bổ sung `docs/BRAND_ASSETS.md`** (`v2.4.0`, nhánh
+  `docs/brand-assets`, chưa push - chờ chủ project mở PR). Chuẩn rút từ bộ tài sản
+  đang chạy thật của `tsudev-cwico`. Đăng ký lối vào ở `AGENTS.md`, `docs/00-INDEX.md`,
+  `docs/DESIGN_SYSTEM.md`; `docs/PROJECT_STRUCTURE.md` ghi rõ `assets/brand/`.
+  Hai món nợ phát hiện được ghi ở mục 11 của tài liệu và thành việc TS-5.
 - 24/08/2026 - **Tái cấu trúc toàn diện bộ quy ước và đồng bộ xuống 4 repo con.**
   Chi tiết đầy đủ: `logs/handover/20260824-01_tai-cau-truc-quy-uoc-v2.md`. Tóm tắt:
   - Phát hành 9 nhãn từ `v2.0.0` đến `v2.3.2`, 12 PR đã merge.
@@ -63,6 +66,11 @@
   phát hiện sửa trộm thật sự là `sync-standards.sh --check`. Ba lỗi liên tiếp
   (`v2.2.1`, `v2.2.2`, và lần hỏng `rm -rf`) đều đến từ việc coi quyền file là lớp
   bảo vệ chính.
+- 24/08/2026 - **Màu thương hiệu tách khỏi token giao diện.** Xanh `tsu` và cam
+  `dev` lấy mẫu từ logo, chỉ dùng cho phần nhận diện, `MUST NOT` ghi đè token ngữ
+  nghĩa trong `tokens/design-tokens.json`. Kèm theo: bộ quy ước trung tâm không giữ
+  file ảnh - `MANIFEST.sha256` băm từng byte và repo con tải toàn bộ về.
+  Chi tiết: `docs/BRAND_ASSETS.md` mục 5 và 11.
 - 24/08/2026 - **Ngưỡng tương phản `text-primary` tách theo loại bề mặt**: ≥ 10:1
   trên nền ổn định, ≥ 7:1 trên nền hover. Chế độ Tối đo được 9.77 trên `bg-hover`;
   chọn làm rõ quy tắc (vốn viết mơ hồ là "trên nền") thay vì đổi một mã màu đang

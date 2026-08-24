@@ -249,6 +249,32 @@ if [[ $IS_CENTRAL == 1 ]]; then
   fi
 
   echo
+  echo "6b. Bản mẫu .gitignore không được chặn file bắt buộc"
+  # Chính bản mẫu của bộ quy ước từng mắc lỗi này: dotnet.gitignore có dòng
+  # [Ll]ogs/ chặn đúng thư mục điều phối phiên mà AGENT_PROTOCOL.md bắt buộc
+  # phải commit. Đây là cổng canh để không tái diễn.
+  tpl_bad=0
+  TMPT="$(mktemp -d)"
+  for tpl in templates/gitignore/*.gitignore; do
+    name="$(basename "$tpl")"
+    [[ "$name" == "base.gitignore" ]] && continue
+    rm -rf "${TMPT:?}/t"; mkdir -p "$TMPT/t/logs" "$TMPT/t/.standards/templates/logs"
+    ( cd "$TMPT/t" && git init -q . ) || continue
+    cat templates/gitignore/base.gitignore "$tpl" > "$TMPT/t/.gitignore"
+    touch "$TMPT/t/logs/STATE.md" "$TMPT/t/logs/LOCKS.md" \
+          "$TMPT/t/.standards/templates/logs/STATE.md"
+    blocked="$( cd "$TMPT/t" && for f in logs/STATE.md logs/LOCKS.md .standards/templates/logs/STATE.md; do
+        git check-ignore -q "$f" && echo "$f"
+      done || true )"
+    if [[ -n "$blocked" ]]; then
+      fail "$name chặn file bắt buộc: $(printf '%s' "$blocked" | tr '\n' ' ')"
+      tpl_bad=$((tpl_bad + 1))
+    fi
+  done
+  rm -rf "$TMPT"
+  [[ $tpl_bad == 0 ]] && pass "không bản mẫu nào chặn file bắt buộc"
+
+  echo
   echo "7. MANIFEST.sha256"
   SHA_CMD="sha256sum"
   command -v sha256sum >/dev/null 2>&1 || SHA_CMD="shasum -a 256"

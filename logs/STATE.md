@@ -5,11 +5,18 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-- [ ] **TS-5** Đưa bản gốc logo `1024x1024` vào `assets/brand/tsudev-logo.png` của
-      `tsudev-cwico` (bản đang có chỉ `222x280`, đang bị phóng to lên 512 để sinh
-      icon), đổi tên theo `docs/BRAND_ASSETS.md` mục 3, chạy lại `tools/gen_icons.py`.
-      Việc nằm ở repo con, không phải repo này. Nguồn: `BRAND_ASSETS.md` mục 11,
-      các bước cụ thể ở phiếu `20260824-02` mục 2. Cần `pip install Pillow`.
+- [ ] **TS-5** Tạo **dấu hiệu thu gọn** `tsudev-mark.png`: chỉ hình cú, KHÔNG chữ,
+      nền trong suốt, cạnh ngắn tối thiểu 1024px, xuất từ file thiết kế gốc.
+      Không cắt ra từ huy hiệu đầy đủ được - chữ "tsudev" đè lên vòng mạch, cắt đi
+      để lại khoảng trống trong vành. **Cần chủ project làm hoặc đặt làm.**
+      Đây là việc chặn TS-6. Nguồn: `docs/BRAND_ASSETS.md` mục 2 và 10.
+- [ ] **TS-6** Thống nhất nhận diện ở `tsudev-cwico` **sau khi có TS-5**. Repo đó
+      đang dùng một con cú khác hẳn (hình học, mắt cam, chip "TSU") và khai
+      `--color-dev-*` là cam `#d2540e` trong `ui/src/index.css`. Ba bước: thay
+      `assets/brand/`, chạy lại `tools/gen_icons.py` (cần `pip install Pillow`),
+      đổi dải màu `dev` sang xanh theo `BRAND_ASSETS.md` mục 5.
+      **Đổi màu là đổi giao diện toàn app** - `MUST` có ảnh chụp trước/sau và
+      `MUST NOT` gộp chung PR với việc đổi ảnh. Việc nằm ở repo con.
 
 ## Đang thực hiện
 
@@ -18,6 +25,12 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **`v2.6.0`: đưa bản gốc dấu hiệu vào repo và sửa lại nội dung sai
+  của `v2.4.0`.** `assets/brand/tsudev-logo.png` nay là bản gốc chính thức, nằm
+  ngoài bộ đồng bộ nên repo con không tải thêm byte nào. Phát hiện quan trọng:
+  huy hiệu chính thức và con cú ở `tsudev-cwico` là **hai thiết kế khác hẳn nhau**,
+  không phải hai độ phân giải của cùng một logo như `v2.4.0` đã giả định.
+  TS-5 cũ dựa trên giả định sai đó nên đã bị viết lại; thêm TS-6.
 - 24/08/2026 - **Phát hành `v2.4.0` + `v2.5.0` và đồng bộ xuống cả 4 repo con.**
   Chi tiết: `logs/handover/20260824-02_phat-hanh-v24-v25-va-dong-bo.md`. Tóm tắt:
   hàng đợi TS-1 đến TS-4 cạn hết; 2 nhãn, 2 Release, PR #14 và #16 ở repo này;
@@ -78,6 +91,11 @@
   Repo một người `MUST` đặt `0` vì GitHub không cho tự duyệt; phần chặn thật là
   cổng kiểm bắt buộc + áp cả với admin, không phải con số duyệt. Chi tiết:
   `docs/GIT_WORKFLOW.md` mục 4.4.
+- 24/08/2026 - **Bản gốc thiết kế được commit vào repo quy ước, ở `assets/brand/`.**
+  Đó là thứ duy nhất trong hệ sinh thái không dựng lại được nếu mất, mà lại đang chỉ
+  nằm trên một máy. Đặt ngoài `docs/tokens/templates/scripts` nên không vào
+  `MANIFEST.sha256` và không đi theo `sync-standards.sh` - repo con không gánh thêm
+  1.7MB. Chi tiết: `docs/BRAND_ASSETS.md` mục 1.
 - 24/08/2026 - **Màu thương hiệu tách khỏi token giao diện.** Xanh `tsu` và cam
   `dev` lấy mẫu từ logo, chỉ dùng cho phần nhận diện, `MUST NOT` ghi đè token ngữ
   nghĩa trong `tokens/design-tokens.json`. Kèm theo: bộ quy ước trung tâm không giữ

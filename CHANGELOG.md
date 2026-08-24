@@ -8,6 +8,57 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.6.0 - 24/08/2026
+
+Bổ sung thuần, kèm một chỗ **sửa lại nội dung sai của chính `v2.4.0`**. Đồng bộ
+được ngay, không cần sửa mã.
+
+### Thêm mới
+
+- `assets/brand/tsudev-logo.png` - **bản gốc chính thức của dấu hiệu**, `1024x1024`,
+  nền trong suốt. Trước bản này, bản gốc chỉ tồn tại trên **một máy cá nhân**, ngoài
+  mọi repo. Mã nguồn mất thì viết lại được; bản gốc thiết kế thì không.
+
+  File nằm **ngoài bộ đồng bộ**: `make-manifest.sh` chỉ băm `AGENTS.md`, `VERSION`,
+  `SECURITY.md`, `docs`, `tokens`, `templates`, `scripts`, và `sync-standards.sh`
+  cũng chỉ chép đúng bộ đó. Repo con **không** tải thêm 1.7MB nào khi đồng bộ; repo
+  nào cần thì lấy riêng một lần và đối chiếu SHA-256 ghi trong tài liệu.
+
+  Tên file cũ `logo-tsudev.png` sai quy ước đặt tên của chính `BRAND_ASSETS.md`
+  mục 3, đã đổi thành `tsudev-logo.png` khi đưa vào.
+
+### Sửa lỗi
+
+- `docs/BRAND_ASSETS.md` - **`v2.4.0` mô tả sai bộ nhận diện**. Bản đó dựng chuẩn
+  từ `tsudev-cwico` và giả định file `1024x1024` nằm rời trên máy cá nhân là bản độ
+  phân giải cao của cùng một logo. **Không phải.** Kiểm chứng bằng số liệu cho thấy
+  đó là hai thiết kế khác hẳn nhau:
+
+  | | Huy hiệu chính thức | Con cú ở `tsudev-cwico` |
+  | --- | --- | --- |
+  | Kích thước | `1024x1024` | `222x280` |
+  | Bố cục | Cú trên vòng mạch, **có chữ "tsudev" nướng sẵn** | Chỉ hình cú, không chữ |
+  | Mắt | Xanh cyan `#49EBFF` | Cam hổ phách |
+  | Màu `dev` | Xanh `#14AAFA` | Cam `#d2540e` |
+
+  Hệ quả đã sửa trong tài liệu:
+
+  1. **Tách hai dấu hiệu** (mục 2): huy hiệu đầy đủ dùng từ **96px** trở lên, dấu
+     hiệu thu gọn cho mọi cỡ nhỏ hơn và mọi icon. Chữ chiếm khoảng 1/8 chiều cao
+     ảnh, nên ở favicon 32px chữ còn 4px - một vệt xám. `MUST NOT` thu nhỏ huy hiệu
+     đầy đủ xuống cỡ icon, và `MUST NOT` tự cắt hình cú ra khỏi huy hiệu vì chữ đè
+     lên vòng mạch.
+  2. **Bảng màu đo lại từ ảnh thật** (mục 5), thay cho bảng cũ lấy từ `cwico`.
+  3. **Cặp màu cho wordmark dựng bằng chữ có kiểm chứng tương phản**: `#14AAFA` chỉ
+     đạt **2.32:1** trên nền sáng, trượt cả ngưỡng chữ lớn, nên nền sáng dùng
+     `#0B6FA8` (**4.92**) và nền tối dùng `#14AAFA` (**6.72**). Cả hai vượt 4.5:1.
+  4. **Mục nợ viết lại** (mục 10): bản nhận diện chính thức **chưa có dấu hiệu thu
+     gọn**, và `tsudev-cwico` đang chạy một bộ nhận diện riêng cả về hình lẫn dải
+     màu. Ba việc liên quan nhau, `MUST` giải quyết cùng một lượt.
+- `docs/00-INDEX.md`: thêm `assets/brand/tsudev-logo.png` vào bảng "Ngoài thư mục docs".
+
+---
+
 ## 2.5.0 - 24/08/2026
 
 Bổ sung thuần và một chỗ sửa tài liệu đang lệch cấu hình thật. Đồng bộ được ngay,

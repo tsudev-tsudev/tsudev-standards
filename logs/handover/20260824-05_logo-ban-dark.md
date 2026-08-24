@@ -33,7 +33,8 @@ clone mới.
 
 Không có việc dang dở, hàng đợi trống.
 
-Một việc còn để ngỏ, **chưa đưa vào hàng đợi vì cần chủ project quyết**:
+Một việc còn để ngỏ, nay đã ghi thành **`TS-8`** trong hàng đợi `logs/STATE.md`
+kèm ba lựa chọn cụ thể (**cần chủ project quyết**):
 `tsudev` và `tsudev-cwico` dựng chữ "dev" bằng hai màu khác nhau - website dùng
 token `text-link` (xanh), `cwico` dùng dải cam riêng. Cả hai đều hợp lệ theo
 `BRAND_ASSETS.md` mục 5. Muốn thống nhất thì phải chọn một, và đó là quyết định

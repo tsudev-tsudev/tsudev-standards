@@ -92,11 +92,46 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
   LEAK_RE='(^|/)\.env$|(^|/)\.env\..*(?<!\.example)(?<!\.sample)$|\.pem$|\.pfx$|\.p12$|\.jks$|\.keystore$|(^|/)id_rsa|(^|/)id_ed25519|(^|/)\.npmrc$|(^|/)\.netrc$|(^|/)secrets\.(json|ya?ml)$|service-account.*\.json$|\.tfstate$|\.kdbx$|\.har$'
   leaked="$(git ls-files | grep -PI "$LEAK_RE" || true)"
   if [[ -n "$leaked" ]]; then
+    blocked=0
     while IFS= read -r f; do
-      fail "file nhạy cảm đang được theo dõi: $f"
+      # Miễn trừ có ghi chép: .standards-allow, mỗi dòng
+      #   <đường dẫn> | <lý do> | <hết hiệu lực DD/MM/YYYY hoặc điều kiện>
+      # Một lần awk duy nhất: tách cột rồi in "lý do<TAB>hạn".
+      # KHÔNG được gsub lên $1 rồi print $0 - awk sẽ dựng lại $0 bằng OFS và
+      # xóa mất chính dấu | đang dùng để phân cột.
+      allow_info=""
+      if [[ -f .standards-allow ]]; then
+        allow_info="$(awk -F'|' -v p="$f" '
+          /^[[:space:]]*#/ { next }
+          NF >= 1 {
+            k = $1; gsub(/^[[:space:]]+|[[:space:]]+$/, "", k)
+            if (k != p) next
+            r = (NF >= 2) ? $2 : ""; gsub(/^[[:space:]]+|[[:space:]]+$/, "", r)
+            e = (NF >= 3) ? $3 : ""; gsub(/^[[:space:]]+|[[:space:]]+$/, "", e)
+            print r "\t" e
+            exit
+          }' .standards-allow)"
+      fi
+      if [[ -n "$allow_info" ]]; then
+        reason="${allow_info%%$'\t'*}"
+        expiry="${allow_info#*$'\t'}"
+        if [[ -z "$reason" || -z "$expiry" ]]; then
+          fail "miễn trừ cho $f thiếu lý do hoặc hạn - .standards-allow cần đủ 3 cột"
+          blocked=$((blocked + 1))
+        else
+          warn "$f được miễn trừ có chủ đích: $reason (hạn: $expiry)"
+        fi
+      else
+        fail "file nhạy cảm đang được theo dõi: $f"
+        blocked=$((blocked + 1))
+      fi
     done <<< "$leaked"
-    echo "        Xử lý: git rm --cached <file>, rồi THU HỒI KHÓA theo" >&2
-    echo "        docs/SECURITY_BASELINE.md mục 9.2 - khóa đã lộ là đã lộ." >&2
+    if [[ $blocked -gt 0 ]]; then
+      echo "        Xử lý: git rm --cached <file>, rồi THU HỒI KHÓA theo" >&2
+      echo "        docs/SECURITY_BASELINE.md mục 9.2 - khóa đã lộ là đã lộ." >&2
+      echo "        Nếu file THẬT SỰ không chứa secret: khai vào .standards-allow" >&2
+      echo "        kèm lý do và hạn (docs/GITIGNORE_POLICY.md mục 7)." >&2
+    fi
   else
     pass "không có file nhạy cảm nào trong chỉ mục git"
   fi

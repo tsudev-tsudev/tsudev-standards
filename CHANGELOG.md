@@ -8,6 +8,31 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.2.0 - 24/08/2026
+
+Bổ sung thuần. Đồng bộ được ngay, không cần sửa mã.
+
+### Thêm mới
+
+- **`.standards-allow` - miễn trừ có ghi chép cho cổng kiểm file nhạy cảm.**
+
+  Cổng kiểm cấm mọi file khớp mẫu nhạy cảm nằm trong chỉ mục git. Quy tắc đó
+  đúng trong hầu hết trường hợp, nhưng có ngoại lệ hợp lệ: `.env.production`
+  của một app Next.js chỉ mang biến `NEXT_PUBLIC_*` vốn được biên dịch thẳng
+  vào bundle trình duyệt, tức đã công khai theo thiết kế.
+
+  Trước bản này, repo gặp tình huống đó chỉ có hai lối: để cổng kiểm đỏ vĩnh
+  viễn, hoặc nới mẫu chặn cho cả hệ sinh thái. Cả hai đều tệ hơn vấn đề.
+
+  Cơ chế mới đòi **đủ ba cột** `<đường dẫn> | <lý do> | <hạn>`; thiếu lý do
+  hoặc thiếu hạn thì vẫn chặn. Mỗi lần chạy, dòng miễn trừ được in ra dạng
+  `LƯU Ý` nên không bao giờ trở nên vô hình. Chi tiết và cảnh báo rủi ro:
+  `docs/GITIGNORE_POLICY.md` mục 6. Mẫu: `templates/standards-allow.example`.
+
+Phát hiện khi đồng bộ bộ quy ước xuống repo `tsudev`.
+
+---
+
 ## 2.1.0 - 24/08/2026
 
 Bổ sung thuần. Đồng bộ được ngay, không cần sửa mã.

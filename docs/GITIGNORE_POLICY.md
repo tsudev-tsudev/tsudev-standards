@@ -75,12 +75,48 @@ printf '\n# --- Riêng của repo này ---\n' >> .gitignore
 | Dùng `*.env` thay vì `.env*` | Bỏ sót `.env.production`, `.env.local` | Dùng đúng bản chuẩn |
 | Xóa bớt dòng của bản chuẩn cho "gọn" | Repo lệch chuẩn, lần sau không ai biết vì sao | Đề xuất qua `proposals/` |
 
-## 6. Cổng kiểm
+## 6. Miễn trừ có ghi chép: `.standards-allow`
+
+Đôi khi một file khớp mẫu nhạy cảm nhưng thật sự không chứa secret - ví dụ
+`.env.production` của một app Next.js chỉ mang biến `NEXT_PUBLIC_*`, vốn được
+biên dịch thẳng vào bundle trình duyệt nên đã công khai theo thiết kế.
+
+Với trường hợp đó, khai vào `.standards-allow` ở gốc repo, **đủ ba cột**:
+
+```
+<đường dẫn> | <lý do> | <hết hiệu lực DD/MM/YYYY hoặc điều kiện>
+```
+
+Ví dụ:
+
+```
+apps/web/.env.production | Chỉ chứa NEXT_PUBLIC_*, đã công khai theo thiết kế | 31/12/2026
+```
+
+**Ba ràng buộc, cố ý làm cho việc miễn trừ khó chịu vừa đủ:**
+
+1. **Thiếu lý do hoặc thiếu hạn thì cổng kiểm vẫn chặn.** Ngoại lệ vô thời hạn
+   không phải ngoại lệ, đó là quy ước ngầm chưa được viết ra.
+2. **Mỗi lần chạy, dòng miễn trừ được in ra dưới dạng `LƯU Ý`.** Nó không bao
+   giờ trở nên vô hình - đó là điểm khác biệt với việc lặng lẽ nới mẫu chặn.
+3. **`MUST NOT` dùng để tắt cảnh báo cho file có secret thật.** Việc đó xử lý
+   theo [`SECURITY_BASELINE.md`](SECURITY_BASELINE.md) mục 9.2: thu hồi khóa
+   trước, dọn lịch sử sau.
+
+**Rủi ro phải biết trước khi dùng:** miễn trừ một file `.env*` nghĩa là người
+sau có thể thêm một biến thật sự bí mật vào chính file đó và nó sẽ được commit
+mà không ai báo. Vì vậy miễn trừ luôn là giải pháp **tạm**, và cột hạn tồn tại
+để buộc nhìn lại. Cách sửa dứt điểm luôn là đưa giá trị đó ra khỏi file `.env*`.
+
+Mẫu đầy đủ: `templates/standards-allow.example`.
+
+## 7. Cổng kiểm
 
 `scripts/check-standards.sh` kiểm tra:
 
 - Repo có `.gitignore` không.
 - `.gitignore` có chứa đủ mọi dòng của bản chuẩn không.
-- Cây làm việc có file nào khớp mẫu nhạy cảm mà **đang được git theo dõi** không.
+- Cây làm việc có file nào khớp mẫu nhạy cảm mà **đang được git theo dõi** không
+  (trừ những gì đã khai ở `.standards-allow` theo mục 6).
 
 Cổng này `MUST` chạy trong CI của mọi repo con và chặn merge khi thất bại.

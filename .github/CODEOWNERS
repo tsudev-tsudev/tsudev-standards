@@ -1,0 +1,11 @@
+# Mọi thay đổi ở repo nguồn chân lý đều cần được duyệt.
+# Cấu hình branch protection cho `main` theo docs/GIT_WORKFLOW.md mục 2.
+
+*                       @tsudev-tsudev
+
+# Vùng nhạy cảm nhất - đổi ở đây lan xuống toàn hệ sinh thái
+/tokens/                @tsudev-tsudev
+/scripts/               @tsudev-tsudev
+/SECURITY.md            @tsudev-tsudev
+/docs/SECURITY_BASELINE.md  @tsudev-tsudev
+/.github/workflows/     @tsudev-tsudev

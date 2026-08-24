@@ -1,5 +1,13 @@
 # Đề xuất: quy ước cấu trúc thư mục cần một hình trạng thứ hai (monorepo)
 
+> **TRẠNG THÁI: ĐÃ NHẬN vào bộ quy ước v2.0.0 ngày 24/08/2026.**
+> `docs/PROJECT_STRUCTURE.md` nay có hai hình trạng: A (ứng dụng đơn) và
+> B (monorepo nhiều workspace), kèm bảng phân biệt `services/` ở gốc repo với
+> `src/services/` bên trong workspace. Repo tự khai hình trạng trong `AGENTS.md`
+> phần B. File này giữ lại làm hồ sơ quyết định - đừng sửa nội dung đề xuất.
+
+---
+
 > **Trạng thái**: chờ gửi. Cùng loại với
 > [`token-upstream-proposal.md`](token-upstream-proposal.md) - gói dán thẳng được
 > vào issue của repo quy ước trung tâm.

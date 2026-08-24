@@ -8,6 +8,24 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.1.0 - 24/08/2026
+
+Bổ sung thuần. Đồng bộ được ngay, không cần sửa mã.
+
+### Thêm mới
+
+- `templates/gitignore/rust.gitignore`. `LANGUAGE_SELECTION.md` mục 2.3 xếp Rust
+  ở mức ⭐ cho đồ họa, kỹ thuật và game engine, nhưng bộ mẫu `.gitignore` lại
+  chưa có bản cho Rust - repo Rust chỉ ghép được phần nền.
+  Bản mới che thêm: tạo phẩm Cargo, thông tin đăng nhập `.cargo/credentials`,
+  dữ liệu đo phủ và hiệu năng, thư mục build của Tauri, và **khóa ký bản cập
+  nhật Tauri** (`*.tauri.key`) - lộ khóa này là mất quyền kiểm soát kênh cập
+  nhật của ứng dụng đã cài trên máy người dùng.
+
+Phát hiện khi chuẩn bị đồng bộ bộ quy ước xuống repo `tsudev-cwico`.
+
+---
+
 ## 2.0.1 - 24/08/2026
 
 Bản vá. Đồng bộ được ngay, không cần sửa mã.

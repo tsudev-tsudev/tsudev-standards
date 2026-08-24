@@ -5,7 +5,28 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-(trống - hàng đợi đã cạn)
+(không còn việc kỹ thuật nào chờ làm)
+
+**Chờ chủ project quyết, agent không tự quyết được:**
+
+- [ ] **TS-8** Chữ "dev" đang có **hai màu** ở hai sản phẩm, cả hai đều hợp lệ theo
+      `docs/BRAND_ASSETS.md` mục 5 nên cổng kiểm không bắt được:
+      - `tsudev` (website): `packages/ui/src/components/Logo.tsx` dùng token
+        `text-link` - ra màu **xanh**.
+      - `tsudev-cwico`: `ui/src/components/Brand.tsx` dùng dải `--color-dev-*`
+        riêng - ra màu **cam**, khớp chữ "dev" cam trong logo chính thức.
+
+      Đây là quyết định nhận diện, không phải lỗi kỹ thuật. Ba lựa chọn:
+      1. **Giữ nguyên** - ghi một dòng vào mục "Quyết định quan trọng" để phiên sau
+         không hỏi lại, rồi đóng việc này.
+      2. **Thống nhất theo cam** (khớp logo): sửa `Logo.tsx` ở website dùng dải cam
+         thay `text-link`. Cam `MUST` lấy theo bảng ở `BRAND_ASSETS.md` mục 5 -
+         `#C2410C` cho nền sáng, `#FE7B2E` cho nền tối.
+      3. **Thống nhất theo xanh** (khớp token giao diện): sửa `Brand.tsx` ở `cwico`
+         dùng `text-link`, và cân nhắc bỏ dải `--color-dev-*` cam.
+
+      Chọn 2 hoặc 3 thì `MUST` có ảnh chụp trước/sau và `MUST` tách PR riêng cho
+      từng repo. Bối cảnh đầy đủ: `logs/handover/20260824-05_logo-ban-dark.md` mục 2.
 
 ## Đang thực hiện
 

@@ -8,6 +8,24 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.0.1 - 24/08/2026
+
+Bản vá. Đồng bộ được ngay, không cần sửa mã.
+
+### Sửa lỗi
+
+- `scripts/check-standards.sh` báo nhầm file mẫu dạng `.env.<môi-trường>.example`
+  là file nhạy cảm. Biểu thức cũ chỉ miễn trừ đúng `.env.example`, nên
+  `.env.production.example` bị chặn oan. Cổng kiểm báo sai làm người dùng mất
+  niềm tin vào cổng kiểm, và đó là cách nhanh nhất để cả nhóm học thói quen bỏ
+  qua màu đỏ.
+- `.gitignore` chuẩn bổ sung hai dòng miễn trừ `!.env.*.example` và
+  `!.env.*.sample`, để file mẫu theo từng môi trường commit được.
+
+Phát hiện khi chạy cổng kiểm lần đầu trên repo `tsudev`.
+
+---
+
 ## 2.0.0 - 24/08/2026
 
 Tái cấu trúc toàn diện. Bộ quy ước chuyển từ 6 file rời sang một hệ có cổng kiểm

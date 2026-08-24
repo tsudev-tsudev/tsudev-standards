@@ -89,7 +89,7 @@ echo "3. File nhạy cảm đang bị git theo dõi"
 # ------------------------------------------------------------------
 if git rev-parse --git-dir >/dev/null 2>&1; then
   # Mẫu bắt các file KHÔNG BAO GIỜ được nằm trong repo.
-  LEAK_RE='(^|/)\.env$|(^|/)\.env\.(?!example|sample)|\.pem$|\.pfx$|\.p12$|\.jks$|\.keystore$|(^|/)id_rsa|(^|/)id_ed25519|(^|/)\.npmrc$|(^|/)\.netrc$|(^|/)secrets\.(json|ya?ml)$|service-account.*\.json$|\.tfstate$|\.kdbx$|\.har$'
+  LEAK_RE='(^|/)\.env$|(^|/)\.env\..*(?<!\.example)(?<!\.sample)$|\.pem$|\.pfx$|\.p12$|\.jks$|\.keystore$|(^|/)id_rsa|(^|/)id_ed25519|(^|/)\.npmrc$|(^|/)\.netrc$|(^|/)secrets\.(json|ya?ml)$|service-account.*\.json$|\.tfstate$|\.kdbx$|\.har$'
   leaked="$(git ls-files | grep -PI "$LEAK_RE" || true)"
   if [[ -n "$leaked" ]]; then
     while IFS= read -r f; do

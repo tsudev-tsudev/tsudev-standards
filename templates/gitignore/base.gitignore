@@ -12,6 +12,8 @@
 .env.*
 !.env.example
 !.env.sample
+!.env.*.example
+!.env.*.sample
 .envrc
 .direnv/
 config.local.*

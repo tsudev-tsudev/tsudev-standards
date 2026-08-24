@@ -5,18 +5,11 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-- [ ] **TS-5** Tạo **dấu hiệu thu gọn** `tsudev-mark.png`: chỉ hình cú, KHÔNG chữ,
-      nền trong suốt, cạnh ngắn tối thiểu 1024px, xuất từ file thiết kế gốc.
-      Không cắt ra từ huy hiệu đầy đủ được - chữ "tsudev" đè lên vòng mạch, cắt đi
-      để lại khoảng trống trong vành. **Cần chủ project làm hoặc đặt làm.**
-      Đây là việc chặn TS-6. Nguồn: `docs/BRAND_ASSETS.md` mục 2 và 10.
-- [ ] **TS-6** Thống nhất nhận diện ở `tsudev-cwico` **sau khi có TS-5**. Repo đó
-      đang dùng một con cú khác hẳn (hình học, mắt cam, chip "TSU") và khai
-      `--color-dev-*` là cam `#d2540e` trong `ui/src/index.css`. Ba bước: thay
-      `assets/brand/`, chạy lại `tools/gen_icons.py` (cần `pip install Pillow`),
-      đổi dải màu `dev` sang xanh theo `BRAND_ASSETS.md` mục 5.
-      **Đổi màu là đổi giao diện toàn app** - `MUST` có ảnh chụp trước/sau và
-      `MUST NOT` gộp chung PR với việc đổi ảnh. Việc nằm ở repo con.
+- [ ] **TS-7** Xuất lại dấu hiệu thu gọn độ phân giải cao cho `tsudev-cwico`. Bản
+      đang có ở `assets/brand/tsudev-logo.png` chỉ `222x280` trong khi
+      `tools/gen_icons.py` sinh icon tới 512 - tức icon đang được phóng to từ nguồn
+      nhỏ hơn. Xuất từ bản gốc `2048x2048` của `tsudev/packages/brand/source/`.
+      **Không đổi nhận diện, chỉ đổi độ phân giải.** Việc nằm ở repo con.
 
 ## Đang thực hiện
 
@@ -25,6 +18,12 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **`v2.7.0`: sửa lỗi nội dung của `v2.4.0` và `v2.6.0` về bộ nhận
+  diện.** `tsudev-cwico` chưa bao giờ lệch chuẩn - con cú của nó và `logo-mark.png`
+  trên tsudev.com là cùng một tác phẩm (IoU 0.957). Bản gốc thật là
+  `tsudev/packages/brand/source/logo.jpeg` `2048x2048`, có dây chuyền sinh từ
+  02/08/2026. **TS-5 không còn cần làm** (dấu hiệu thu gọn đã tồn tại) và **TS-6
+  đã huỷ** (đổi cam sang xanh sẽ làm app lệch khỏi website). Thay bằng TS-7.
 - 24/08/2026 - **`v2.6.0` đã đồng bộ xuống cả 4 repo con.** `tsudev` #64,
   `swico` #5, `tsudev-cwico` #8, `tsudev-contact` #3 - đều `version=2.6.0`, đã xác
   minh bằng clone mới, CI `main` xanh. Chi tiết phiên:
@@ -95,6 +94,11 @@
   Repo một người `MUST` đặt `0` vì GitHub không cho tự duyệt; phần chặn thật là
   cổng kiểm bắt buộc + áp cả với admin, không phải con số duyệt. Chi tiết:
   `docs/GIT_WORKFLOW.md` mục 4.4.
+- 24/08/2026 - **Huy hiệu xanh cyan KHÔNG phải nhận diện chính thức** (chủ project
+  quyết 24/08/2026). Cam/navy giữ nguyên. File giữ ở `assets/brand/variants/` có
+  nhãn "không dùng cho sản phẩm" - giữ để không mất, không phải để dùng. Chuyển hệ
+  sinh thái sang nó là một cuộc đổi nhận diện, `MUST` làm đồng loạt website + app +
+  favicon + avatar + ảnh chia sẻ. Chi tiết: `docs/BRAND_ASSETS.md` mục 11.
 - 24/08/2026 - **Bản gốc thiết kế được commit vào repo quy ước, ở `assets/brand/`.**
   Đó là thứ duy nhất trong hệ sinh thái không dựng lại được nếu mất, mà lại đang chỉ
   nằm trên một máy. Đặt ngoài `docs/tokens/templates/scripts` nên không vào

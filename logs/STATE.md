@@ -14,6 +14,10 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **Bản logo cho nền tối** (`tsudev` #66, quy ước `v2.8.0`).
+  `logo-full-dark.png` và `logo-wordmark-dark.png` sinh từ chính dây chuyền
+  `packages/brand/build-assets.js`: mực navy đổi sang trắng (1.38:1 lên 17.28:1),
+  chữ cam giữ nguyên vì đã đạt 6.66:1. Món nợ ghi ở `v2.7.0` mục 10 đã trả.
 - 24/08/2026 - **TS-7 xong, hàng đợi cạn.** `tsudev-cwico` #9: xuất lại dấu hiệu
   thu gọn từ bản gốc `2048x2048` bằng đúng thuật toán của `build-assets.js`, sinh
   lại 26 icon. Nguồn `222x280` lên `824x1083`, IoU so với bản cũ **0.9553** - không

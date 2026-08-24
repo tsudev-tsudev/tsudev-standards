@@ -8,6 +8,35 @@ Mới nhất trên cùng.
 
 ---
 
+## 2.8.0 - 24/08/2026
+
+Bổ sung thuần. Trả xong món nợ ghi ở `v2.7.0` mục 10.
+
+### Thêm mới
+
+- `docs/BRAND_ASSETS.md` mục 2 và 4 - **bản cho nền tối**. Hai file
+  `brand/logo-full-dark.png` và `brand/logo-wordmark-dark.png` nay tồn tại thật ở
+  repo `tsudev` (PR #66), sinh ra bởi chính dây chuyền `packages/brand/build-assets.js`.
+
+  Vấn đề chúng giải: chữ navy `#11355A` của logo chỉ đạt **1.38:1** trên nền Tối
+  `#0F1B2D` - dưới mọi ngưỡng WCAG. Giao diện web lách được vì dựng chữ bằng text
+  ăn theo token, nhưng **ảnh in, ảnh chia sẻ và slide nền tối thì không lách được**.
+
+  Cách làm, ghi lại vì nó là quyết định chứ không phải thao tác: đổi mực navy sang
+  trắng (**17.28:1**) và **giữ nguyên chữ cam** `#FE7B2E`, vốn đã đạt **6.66:1**
+  trên cùng nền đó. Bản dark vì vậy vẫn là nhận diện tsudev chứ không phải một bảng
+  màu khác. Hình con cú không bị đụng tới - nó đủ tương phản trên cả hai nền.
+
+  Quy tắc mới: trên nền tối `MUST NOT` dùng bản thường; nơi dựng được chữ bằng text
+  thì vẫn `SHOULD` dùng `logo-mark.png` kèm chữ text, vì cách đó tự đúng ở cả ba
+  chế độ nền mà không phải chọn file.
+
+  Giới hạn đã ghi thẳng vào tài liệu: quầng sáng của con cú được vẽ để tan vào nền
+  trắng, nên ở cỡ rất lớn trên nền tối phần đáy thân cú vẫn hơi lộ vệt sáng. Dưới
+  300px không nhận ra. Sửa hết hẳn là việc của khâu thiết kế.
+
+---
+
 ## 2.7.0 - 24/08/2026
 
 **Sửa lỗi quan trọng về nội dung.** `v2.4.0` và `v2.6.0` mô tả sai bộ nhận diện

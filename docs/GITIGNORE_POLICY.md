@@ -24,6 +24,7 @@ cat .standards/templates/gitignore/node.gitignore   >> .gitignore   # Node/TypeS
 cat .standards/templates/gitignore/python.gitignore >> .gitignore   # Python
 cat .standards/templates/gitignore/dotnet.gitignore >> .gitignore   # C#/.NET
 cat .standards/templates/gitignore/cpp.gitignore    >> .gitignore   # C/C++
+cat .standards/templates/gitignore/rust.gitignore   >> .gitignore   # Rust / Tauri
 cat .standards/templates/gitignore/mobile.gitignore >> .gitignore   # Flutter/RN/Android/iOS
 
 # Bước 3: thêm phần riêng của repo dưới tiêu đề rõ ràng

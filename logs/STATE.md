@@ -5,13 +5,26 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-- [ ] **TS-14** Phát hành `v3.0.0`: đẩy nhánh, mở PR, merge, gắn nhãn, tạo Release,
-      đồng bộ xuống 4 repo con. **Đang chặn ở bước đẩy mã** - `gh` đang chạy bằng
-      tài khoản không có quyền ghi. Chủ project gõ `! gh auth switch --user
-      tsudev-tsudev` trong terminal rồi phiên sau làm tiếp theo 6 bước ở
-      `logs/handover/20260825-07_phat-hanh-v3-chan-quyen.md` mục 2.
-      Nội dung đã xong và đã commit thành 8 commit trên nhánh
-      `feat/quy-uoc-v3-tai-khoan-bang-nhan-dien`.
+- [ ] **TS-15** `docs/AUTH_AND_ACCOUNT.md` mục 1 xếp **sai hạng** cho
+      `tsudev-contact`: bảng ghi nó là **hạng A - web có tài khoản**, nhưng repo
+      đó là app desktop Tkinter đóng gói `.exe` bằng PyInstaller, chạy ngoại
+      tuyến, không có tài khoản nào. Theo mô tả trong chính bảng đó thì nó là
+      **hạng C**. Để nguyên thì `QU-STD-AUTH` buộc dựng cả luồng OIDC cho một
+      công cụ chuyển CSV sang vCard. Việc `QU-STD-AUTH` ở repo đó đã được ghi ở
+      trạng thái **chặn**, chờ quyết định này. Sửa xong là bản `v3.0.1`.
+
+- [ ] **TS-16** `sync-standards.sh` **không mang theo** `scripts/check-standards.sh`,
+      nên repo con chạy đồng bộ xong vẫn giữ cổng kiểm cũ quét 10 đuôi file, thấy
+      xanh và tưởng mình đạt chuẩn. Nghĩa là cải tiến lớn nhất của TS-12 (mở lên
+      47 đuôi) **không tự đến được repo con**. Phiên này đã chép tay script vào cả
+      4 repo con để vá tạm. Hai hướng sửa dứt điểm:
+      1. Đưa `scripts/` vào gói đồng bộ và vào `MANIFEST.sha256` (script thành
+         thứ được xác minh băm như tài liệu). Sạch nhất, nhưng repo con mất quyền
+         sửa script cho hợp cảnh của mình.
+      2. Thêm một bước bắt buộc vào `docs/SYNC.md` và vào mẫu "Hướng dẫn nâng
+         cấp" của CHANGELOG: `curl` lại `check-standards.sh` theo đúng nhãn đang
+         đồng bộ. Ít xâm lấn hơn, nhưng dựa vào người nhớ làm.
+      Đề xuất chọn hướng 1. Sửa xong là bản `v3.1.0`.
 
 **Chờ chủ project quyết, agent không tự quyết được:**
 
@@ -40,6 +53,22 @@
 | --- | --- | --- |
 
 ## Đã hoàn thành (mới nhất trên cùng)
+
+- 25/08/2026 - **TS-14: phát hành `v3.0.0` và đồng bộ xuống cả 4 repo con.**
+  - Repo này: PR #25 (9 commit, merge kiểu `rebase` theo `GIT_WORKFLOW.md` mục
+    4.5 vì chuỗi commit có nghĩa riêng), nhãn `v3.0.0`, lượt rà soát bảo mật theo
+    mục 4.4 ghi thành comment trên PR.
+  - Repo con: `tsudev` #71, `swico` #8, `tsudev-cwico` #12, `tsudev-contact` #6.
+    Mỗi PR ba commit: dọn gạch ngang, đồng bộ `.standards/`, mở việc `QU-STD-*`.
+    CI xanh cả 4.
+  - Dọn 8 chỗ gạch ngang ở 3 repo con, trong đó 2 chỗ là chuỗi người dùng nhìn
+    thấy (tiêu đề cửa sổ và mô tả gói MSIX của `tsudev-cwico`). Hai chỗ được
+    miễn trừ đúng luật: migration Prisma của `tsudev`, và dòng trích ký tự có ghi
+    mã điểm.
+  - `AGENTS.md` của cả 4 repo con thiếu 4 lối vào trong bảng bản đồ quy ước
+    (`BRAND_ASSETS.md` thiếu từ `v2.4.0`), đã bổ sung.
+  - Hai lỗi của chính bộ quy ước lộ ra khi đồng bộ: TS-15 và TS-16 trong hàng đợi.
+  Chi tiết: `logs/handover/20260825-08_phat-hanh-v3-va-dong-bo.md`.
 
 - 25/08/2026 - **Đóng gói bản phát hành `v3.0.0` thành 8 commit theo nhóm chủ đề**
   trên nhánh `feat/quy-uoc-v3-tai-khoan-bang-nhan-dien` (`3cc6cdf` tới `eeee963`),

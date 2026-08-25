@@ -13,6 +13,24 @@
       công cụ chuyển CSV sang vCard. Việc `QU-STD-AUTH` ở repo đó đã được ghi ở
       trạng thái **chặn**, chờ quyết định này. Sửa xong là bản `v3.0.1`.
 
+- [ ] **TS-17** Cổng kiểm CI của repo con đối chiếu với **nhánh `main`** của bộ
+      quy ước chứ không với **nhãn đang ghim**. `docs/SYNC.md` mục 5.1 chạy
+      `./scripts/sync-standards.sh --check` không kèm `--ref`, mà mặc định của
+      script là `REF="main"`. Hệ quả đo được trong phiên 07: ngay khi `v3.0.0` vào
+      `main` ở đây, CI trên `main` của `tsudev` đỏ (run `32834615830`, 13 dòng
+      `LỆCH`), dù repo đó lúc ấy đang ghim `v2.8.0` hoàn toàn hợp lệ. Nó chỉ xanh
+      lại sau khi đồng bộ.
+      Việc ghim theo nhãn ở `.standards-version` vì vậy **không có tác dụng thật**:
+      repo con buộc phải chạy theo `main` ngay lập tức, nếu không CI đỏ.
+      Hai hướng:
+      1. Sửa mục 5.1 thành `--ref "$(grep '^ref=' .standards-version | cut -d= -f2)"`.
+         Đối chiếu đúng thứ repo con đang ghim; muốn biết có bản mới hơn không thì
+         đó là việc của mục 5.2 (PR nâng cấp hằng tuần), không phải của cổng chặn merge.
+      2. Giữ nguyên, coi CI đỏ là tín hiệu "có bản mới, đồng bộ đi". Nhưng như vậy
+         thì `MUST` ghi rõ trong `SYNC.md` rằng đỏ kiểu này không chặn được gì
+         khác, và `MUST` phát hành + đồng bộ trong cùng một phiên.
+      Đề xuất hướng 1. Sửa xong là bản `v3.1.0`, gộp chung với TS-16.
+
 - [ ] **TS-16** `sync-standards.sh` **không mang theo** `scripts/check-standards.sh`,
       nên repo con chạy đồng bộ xong vẫn giữ cổng kiểm cũ quét 10 đuôi file, thấy
       xanh và tưởng mình đạt chuẩn. Nghĩa là cải tiến lớn nhất của TS-12 (mở lên
@@ -68,6 +86,8 @@
   - `AGENTS.md` của cả 4 repo con thiếu 4 lối vào trong bảng bản đồ quy ước
     (`BRAND_ASSETS.md` thiếu từ `v2.4.0`), đã bổ sung.
   - Hai lỗi của chính bộ quy ước lộ ra khi đồng bộ: TS-15 và TS-16 trong hàng đợi.
+  - Đã merge hết, Release đã tạo, xác minh bằng clone mới: cả 4 repo con
+    `ref=v3.0.0 version=3.0.0`, cổng kiểm và `sync --check` đạt, CI `main` xanh.
   Chi tiết: `logs/handover/20260825-08_phat-hanh-v3-va-dong-bo.md`.
 
 - 25/08/2026 - **Đóng gói bản phát hành `v3.0.0` thành 8 commit theo nhóm chủ đề**

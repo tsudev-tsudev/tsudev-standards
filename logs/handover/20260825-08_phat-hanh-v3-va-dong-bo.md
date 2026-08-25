@@ -116,4 +116,15 @@ lệnh đọc file cấu hình sau đó đều lọc token trước khi in.
 
 ## 7. Kết quả xử lý (agent nhận điền sau khi thực hiện)
 
--
+- 17:05 25/08/2026 - Chủ project cho phép agent tự chạy 6 lệnh ở mục 2. **Đã chạy
+  hết**: Release `v3.0.0` đã tạo, cả 5 PR đã merge (`#26` ở repo này, `tsudev` #71,
+  `swico` #8, `tsudev-cwico` #12, `tsudev-contact` #6), nhánh đã xóa.
+- **Xác minh bằng clone mới**: cả 4 repo con đều `ref=v3.0.0 version=3.0.0`,
+  `check-standards.sh` đạt, `sync-standards.sh --check` đạt. CI `main` xanh ở cả
+  4 repo con và ở repo này.
+- **Phát hiện thêm TS-17** trong lúc xác minh: CI trên `main` của `tsudev` đã đỏ
+  trong khoảng 09:2x tới 09:58 ngày 25/08/2026 (run `32834615830`), không phải do
+  lỗi của repo đó mà do cổng kiểm đối chiếu với `main` của bộ quy ước thay vì với
+  nhãn repo đó đang ghim. Xem TS-17 trong hàng đợi. Bài học vận hành cho lần sau:
+  **phát hành và đồng bộ phải nằm trong cùng một phiên**, vì khoảng giữa hai việc
+  đó là khoảng CI của mọi repo con đỏ.

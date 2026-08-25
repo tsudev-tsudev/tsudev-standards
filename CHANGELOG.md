@@ -8,6 +8,60 @@ Mới nhất trên cùng.
 
 ---
 
+## 3.1.1 - 25/08/2026
+
+Sửa hướng dẫn nâng cấp của `3.1.0`. Không đổi hành vi script, không đổi nội dung
+quy ước.
+
+### Sửa
+
+- **Hướng dẫn nâng cấp lên `3.1.0` thiếu bước bắt buộc đầu tiên.** Bản `3.1.0`
+  đưa cổng kiểm vào gói đồng bộ, nhưng thay đổi đó nằm **bên trong**
+  `scripts/sync-standards.sh`. Repo con nâng cấp bằng chính script cũ của nó, nên
+  script cũ chép gói cũ: `.standards-version` lên `3.1.0` mà `.standards/scripts/`
+  vẫn trống và `scripts/check-standards.sh` vẫn nguyên bản cũ. Bản vá tự nó
+  **không triển khai được chính nó**.
+
+  Đã kiểm chứng bằng ca thật trên cả 4 repo con trước khi viết mục này, không
+  phải suy đoán.
+
+  Đây là chi phí một lần của riêng lần chuyển từ `3.0.x` lên `3.1.x`. Từ `3.1.1`
+  trở đi repo con đã cầm script mới, `.standards/scripts/sync-standards.sh` đi
+  theo gói, và `--check` canh giúp phần lệch.
+
+### Hướng dẫn nâng cấp
+
+**Bước 1 - bắt buộc, làm trước.** Lấy script đồng bộ của bản mới:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/tsudev-tsudev/tsudev-standards/v3.1.1/scripts/sync-standards.sh \
+  -o scripts/sync-standards.sh
+chmod +x scripts/sync-standards.sh
+```
+
+**Bước 2 - đồng bộ và kiểm.**
+
+```bash
+./scripts/sync-standards.sh --ref v3.1.1
+./scripts/check-standards.sh
+./scripts/sync-standards.sh --check
+```
+
+**Bước 3 - commit, nhớ đủ bốn đường dẫn.**
+
+```bash
+git add .standards .standards-version scripts/check-standards.sh scripts/sync-standards.sh
+```
+
+Cách tự kiểm đã làm đúng: `ls .standards/scripts/` phải ra **hai** file. Ra rỗng
+nghĩa là bước 1 bị bỏ qua, và lúc đó `.standards-version` vẫn ghi `3.1.1` nên
+nhìn số bản là không phát hiện được.
+
+**Điều KHÔNG đổi:** không tài liệu quy ước nào đổi nội dung, không token nào đổi
+giá trị, không script nào đổi hành vi so với `3.1.0`.
+
+---
+
 ## 3.1.0 - 25/08/2026
 
 Bản này vá **hai lỗ hổng của chính cơ chế đồng bộ**, cả hai đều lộ ra khi phát
@@ -79,6 +133,13 @@ token nào đổi giá trị, không repo con nào phải sửa mã.
   chiếu theo nhãn đang ghim.
 
 ### Hướng dẫn nâng cấp
+
+> **THIẾU MỘT BƯỚC - đọc mục `3.1.1` thay cho mục này.** Hướng dẫn dưới đây không
+> chạy được: repo con thực hiện nó bằng `scripts/sync-standards.sh` **cũ**, mà
+> toàn bộ bản vá của `3.1.0` lại nằm trong chính script đó. Chạy đúng như viết ở
+> đây thì `.standards-version` lên `3.1.0` trong khi gói vẫn là gói cũ, không có
+> `.standards/scripts/`, và cổng kiểm ở gốc không được cập nhật. Phát hiện lúc
+> đồng bộ thật, đã sửa ở `3.1.1`.
 
 Bản MINOR, **không repo con nào phải sửa mã**. Ba bước:
 

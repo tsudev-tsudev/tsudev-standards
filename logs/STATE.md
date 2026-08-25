@@ -35,6 +35,22 @@
 
 ## Đã hoàn thành (mới nhất trên cùng)
 
+- 24/08/2026 - **`v3.0.0` (MAJOR): bộ quy ước lần đầu bắt buộc về chức năng sản
+  phẩm, không chỉ về cách viết mã.** TS-9 tới TS-13 xong hết.
+  - Ba tài liệu mới: `docs/AUTH_AND_ACCOUNT.md` (kiến trúc tài khoản, ba lối vào
+    Google/GitHub/tsudev, cơ chế Xác minh tài khoản 7 ngày, ma trận quyền),
+    `docs/DATA_TABLE.md` (bộ chọn số bản ghi `10/20/50/100/200`, mặc định `10`,
+    góc dưới bên trái), `docs/ECOSYSTEM_IDENTITY.md` (tsudev.com, ảnh đại diện,
+    trang hồ sơ).
+  - `BRAND_ASSETS.md` thêm mục 12 (bộ tài sản bắt buộc theo loại sản phẩm, có
+    cổng kiểm CI mẫu) và mục 13 (kho lưu và kho dùng).
+  - `AGENTS.md` mục 7.1: quy ước gạch ngang tách riêng, siết phạm vi.
+    `check-standards.sh` mục 4 mở từ 10 lên 47 đuôi file, thêm cảnh báo en-dash.
+  - `SEARCH_AND_FILTER.md` mục 7: trần `page_size` nâng 100 lên 200 kèm hai ràng
+    buộc bù bắt buộc.
+  - Cổng kiểm xanh 0 lưu ý. **Chưa phát hành nhãn, chưa đồng bộ xuống repo con** -
+    xem `logs/handover/20260824-06_quy-uoc-v3.md` mục 2.
+
 - 24/08/2026 - **`v2.8.0` đã đồng bộ xuống cả 4 repo con** (`tsudev` #67,
   `swico` #7, `tsudev-cwico` #11, `tsudev-contact` #5). Chi tiết phiên:
   `logs/handover/20260824-05_logo-ban-dark.md`.
@@ -95,6 +111,29 @@
 
 > Quyết định kiến trúc lớn thì viết ADR riêng theo `docs/templates/ADR.md` và chỉ
 > ghi một dòng tham chiếu ở đây.
+
+- 24/08/2026 - **`logo-tsudev.png` KHÔNG được dùng cho sản phẩm** (chủ project
+  quyết lại 24/08/2026, khẳng định quyết định cũ). File đó là bản sao đúng từng
+  byte của `assets/brand/variants/tsudev-badge-cyan.png` (md5 `00c334bc...`).
+  Yêu cầu "áp logo này cho mọi project" được hiểu là **siết quy tắc bắt buộc**:
+  mọi sản phẩm phải đủ bộ logo/favicon/icon/ảnh chia sẻ sinh từ dây chuyền chính
+  thức cam/navy, có cổng kiểm CI canh. Nhận diện **không đổi**.
+  Chi tiết: `docs/BRAND_ASSETS.md` mục 12 và 13.
+- 24/08/2026 - **Trần `page_size` nâng từ 100 lên 200** (chủ project quyết). Đây
+  là nới lỏng nên nó có giá: `MUST` có giới hạn tần suất riêng cho `page_size` từ
+  100 trở lên, và `MUST` chuyển sang phân trang con trỏ khi tập dữ liệu vượt
+  100.000 bản ghi. Hai ràng buộc đó là **điều kiện** của việc nâng trần, không
+  phải khuyến nghị kèm theo. Chi tiết: `docs/DATA_TABLE.md` mục 8.
+- 24/08/2026 - **`tsudev.com` là Nhà cung cấp danh tính duy nhất của hệ sinh
+  thái.** Google và GitHub nối vào IdP đó, `MUST NOT` nối thẳng vào từng project.
+  Lý do: mỗi `client_id` thừa là một bề mặt tấn công thừa, và nối thẳng thì cùng
+  một người ở hai sản phẩm thành hai tài khoản khác nhau. Chi tiết:
+  `docs/AUTH_AND_ACCOUNT.md` mục 2.
+- 24/08/2026 - **Bản này là MAJOR, không phải MINOR.** Ba tài liệu mới đều mang
+  quy tắc mức `MUST` buộc repo con sửa mã (thêm bộ chọn số bản ghi, thêm cơ chế
+  xác minh, bổ sung tài sản nhận diện). Theo `docs/VERSIONING.md` mục 1, buộc sửa
+  mã là định nghĩa của thay đổi phá vỡ. CHANGELOG có mục "Hướng dẫn nâng cấp" 4
+  bước, trong đó bước 1 (dọn em-dash) `MUST` làm **trước** khi đồng bộ.
 
 - 24/08/2026 - **Repo chuyển Private sang Public.** Private buộc mỗi repo con giữ
   một token để đồng bộ (đẻ thêm secret phải quản lý), trong khi Public mở khóa

@@ -1,4 +1,4 @@
-# ĐỒNG BỘ BỘ QUY ƯỚC - repo con luôn ở trạng thái mới nhất (v3.1.0)
+# ĐỒNG BỘ BỘ QUY ƯỚC - repo con luôn ở trạng thái mới nhất (v3.1.1)
 
 > Quy ước chỉ có giá trị khi mọi repo thực sự đang chạy cùng một bản. Tài liệu
 > này mô tả cơ chế bắt buộc để repo con biết mình đang ở bản nào, và biết ngay
@@ -110,6 +110,18 @@ git commit -m "chore(standards): nâng lên quy ước v3.1.0"
 
 `scripts/check-standards.sh` **được lần đồng bộ ghi đè** theo bản trung tâm, nên
 nhớ `git add` cả nó. Đồng bộ có sửa file này thì nó in ra một dòng báo.
+
+**Ca một lần, chỉ gặp khi repo con còn ở bản trước `v3.1.0`:** bản vá đưa cổng
+kiểm vào gói đồng bộ nằm bên trong chính `sync-standards.sh`, nên script cũ không
+mang gói mới về được - nó chép đúng gói mà nó biết. Triệu chứng: `.standards-version`
+lên bản mới nhưng `ls .standards/scripts/` ra rỗng. Nhìn số bản không phát hiện
+được. Làm một lần rồi thôi:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/tsudev-tsudev/tsudev-standards/v3.1.1/scripts/sync-standards.sh \
+  -o scripts/sync-standards.sh
+chmod +x scripts/sync-standards.sh
+```
 
 `MUST` đọc `CHANGELOG.md` của bản mới trước khi commit. Nếu là thay đổi phá vỡ
 (số chính tăng), `MUST` thực hiện phần "Hướng dẫn nâng cấp" trong CHANGELOG
@@ -240,6 +252,7 @@ phải của cổng chặn merge.
 | `thiếu .standards-version` | Chép tay thay vì chạy script | Chạy `./scripts/sync-standards.sh` |
 | `LỆCH: scripts/check-standards.sh khác bản trung tâm` | Cổng kiểm ở gốc repo đã cũ hơn bản đang ghim | Chạy `./scripts/sync-standards.sh` - từ `v3.1.0` nó tự ghi đè file này |
 | `LƯU Ý: .standards/scripts/... chưa có` | Repo đang ghim bản cũ hơn `v3.1.0`, khi đó gói đồng bộ chưa mang cổng kiểm | Không phải lỗi, không chặn merge. Nâng lên `v3.1.0` trở lên thì hết |
+| `.standards-version` lên bản mới nhưng `ls .standards/scripts/` ra rỗng | Đồng bộ bằng `sync-standards.sh` cũ hơn `v3.1.0`, script cũ chép gói cũ | Lấy script mới bằng `curl` ở mục 4, rồi đồng bộ lại. Chỉ gặp một lần |
 | `CẢNH BÁO: scripts/sync-standards.sh khác bản trung tâm` | Script bootstrap đã cũ. Nó **không** tự ghi đè chính mình, vì đổi công cụ ngay giữa lúc nó đang chạy là rủi ro không đáng | Chép tay đúng một lần theo lệnh script in ra |
 | Không ghi được vào `.standards/` | File đã bị đặt chỉ-đọc sau khi đồng bộ | Đúng như thiết kế. Đừng `chmod` để sửa, hãy sửa ở trung tâm |
 | Cổng kiểm CI đỏ ngay sau khi chạy công cụ định dạng | Prettier hoặc tương đương đã sửa file trong `.standards/`, làm lệch băm | Thêm `.standards/` vào `.prettierignore` và `.eslintignore` theo mục 3.1, rồi `./scripts/sync-standards.sh` để khôi phục |

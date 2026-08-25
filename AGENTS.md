@@ -43,8 +43,11 @@ chuyên đề. Bản đồ đầy đủ: [`docs/00-INDEX.md`](docs/00-INDEX.md).
 | Nhánh, commit, PR, phát hành | [`docs/GIT_WORKFLOW.md`](docs/GIT_WORKFLOW.md) |
 | Hạ tầng 0 đồng | [`docs/FREE_TIER_STACK.md`](docs/FREE_TIER_STACK.md) |
 | Chọn ngôn ngữ, framework | [`docs/LANGUAGE_SELECTION.md`](docs/LANGUAGE_SELECTION.md) |
+| **Đăng nhập, đăng ký, xác minh tài khoản** | [`docs/AUTH_AND_ACCOUNT.md`](docs/AUTH_AND_ACCOUNT.md) |
 | Giao diện, token, component | [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) |
+| Bảng bản ghi, bộ chọn số bản ghi | [`docs/DATA_TABLE.md`](docs/DATA_TABLE.md) |
 | Logo, favicon, icon ứng dụng | [`docs/BRAND_ASSETS.md`](docs/BRAND_ASSETS.md) |
+| tsudev.com, ảnh đại diện, trang hồ sơ | [`docs/ECOSYSTEM_IDENTITY.md`](docs/ECOSYSTEM_IDENTITY.md) |
 | Cấu trúc thư mục | [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md) |
 | Khả năng truy cập | [`docs/ACCESSIBILITY.md`](docs/ACCESSIBILITY.md) |
 | Kiểm thử và chất lượng mã | [`docs/TESTING_QUALITY.md`](docs/TESTING_QUALITY.md) |

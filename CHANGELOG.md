@@ -8,6 +8,166 @@ Mới nhất trên cùng.
 
 ---
 
+## 3.0.0 - 24/08/2026
+
+**Thay đổi phá vỡ.** Bộ quy ước lần đầu bắt buộc về **chức năng sản phẩm**, không
+chỉ về cách viết mã. Bốn nghĩa vụ mới, mỗi nghĩa vụ đều cần repo con sửa mã. Đọc
+mục "Hướng dẫn nâng cấp" ở cuối trước khi chạy `sync-standards.sh`.
+
+### Thêm mới
+
+- **`docs/AUTH_AND_ACCOUNT.md`** - kiến trúc xác thực và tài khoản dùng chung.
+
+  Vấn đề nó giải: bốn sản phẩm đang có bốn cách hiểu khác nhau về "đăng nhập", và
+  chưa sản phẩm nào có khái niệm tài khoản đã xác minh hay chưa. Người dùng đăng
+  nhập bằng Google ở website rồi mở app ra vẫn là người lạ.
+
+  `tsudev.com` được định nghĩa là **Nhà cung cấp danh tính duy nhất** (OIDC).
+  Google và GitHub nối vào IdP chứ không nối thẳng vào từng project - nhờ vậy một
+  người là một tài khoản trên toàn hệ sinh thái. Ba lối vào bắt buộc và đúng thứ
+  tự: Google, GitHub, tài khoản tsudev.
+
+  **Cơ chế Xác minh tài khoản** (mục 8) là phần lớn nhất: định nghĩa trạng thái,
+  hạn ân hạn **7 ngày** kể từ lúc tạo tài khoản, ba mức hạn chế, huy hiệu hiển thị
+  có đủ màu-chữ-icon, và nhắc vào ngày 3, ngày 6, ngày hết hạn. Đăng nhập bằng
+  Google/GitHub với `email_verified: true` được tính là Đã xác minh ngay, không
+  bắt làm lại.
+
+  Ghi lại vì nó là quyết định bảo mật chứ không phải thao tác: **chỉ gộp danh tính
+  theo email khi nhà cung cấp khẳng định email đã xác minh** (mục 5). Bỏ điều kiện
+  này là mở lỗ hổng chiếm tài khoản trước khi nạn nhân kịp đăng ký. Và mọi hạn chế
+  `MUST` thi hành ở tầng máy chủ - ẩn nút không phải là phân quyền.
+
+  Sản phẩm ngoại tuyến như `tsudev-swico` xếp **hạng C**: đăng nhập là tùy chọn,
+  `MUST NOT` chặn chức năng lõi sau màn hình đăng nhập, `MUST NOT` gọi mạng ngầm
+  khi chưa đăng nhập. Một phần mềm rà quét máy tính mà tự gọi ra ngoài là thứ đầu
+  tiên bị công cụ bảo mật gắn cờ, và đúng ra phải như vậy.
+
+- **`docs/DATA_TABLE.md`** - chuẩn vùng bản ghi và bộ chọn số bản ghi.
+
+  Bộ mốc chuẩn `10 | 20 | 50 | 100 | 200`, mặc định `10`, đặt ở **góc dưới bên
+  trái** vùng chứa bản ghi, kể cả khi vùng đó nằm trong modal và kể cả ở màn hình
+  hẹp. Không có lựa chọn "Tất cả": đó là một truy vấn không có trần.
+
+  Hai quy tắc hành vi đáng chú ý: đổi mốc `MUST` **giữ nguyên bản ghi đầu đang
+  nhìn thấy** thay vì nhảy về trang 1, và `MUST` tải lại từ máy chủ thay vì tải
+  sẵn 200 dòng rồi cắt ở máy khách - nếu cắt ở máy khách thì mốc `10` không tiết
+  kiệm được gì.
+
+- **`docs/ECOSYSTEM_IDENTITY.md`** - `tsudev.com`, ảnh đại diện, trang hồ sơ.
+
+  Ba vai của `tsudev.com` (cổng sản phẩm, nhà cung cấp danh tính, nguồn nhận diện)
+  và bản mô tả chuẩn dùng nguyên văn ở mọi repo. Siêu dữ liệu bắt buộc cho web,
+  desktop và kho mã, trong đó `og:site_name` `MUST` là chuỗi `tsudev` ở mọi sản
+  phẩm kể cả sản phẩm có tên miền riêng.
+
+  Chuẩn ảnh đại diện dùng chung (mục 6): thứ tự nguồn, ràng buộc tải lên, và ba
+  thao tác cùng tên gọi ở mọi sản phẩm - **Tải ảnh lên / Đổi ảnh / Xóa ảnh**.
+  Phần bảo mật ảnh không thương lượng: kiểm kiểu thật bằng chữ ký byte đầu, giải
+  mã và mã hóa lại phía máy chủ, **xóa EXIF** (ảnh điện thoại mang theo tọa độ GPS
+  nhà người dùng), từ chối `SVG` và ảnh động. Không có ảnh thì sinh **ảnh chữ cái**
+  tại chỗ, không phải hình bóng người xám và không gọi Gravatar.
+
+  Trang hồ sơ có bố cục cố định: menu dọc `220px`, nội dung tối đa `720px`, mỗi
+  nhóm một thẻ và **một nút Lưu riêng** - không có nút lưu chung cho cả trang, vì
+  người dùng không biết mình vừa lưu những gì.
+
+- **`docs/BRAND_ASSETS.md` mục 12** - bộ tài sản nhận diện **bắt buộc** theo loại
+  sản phẩm, kèm cổng kiểm CI mẫu. Trước bản này tài liệu mô tả *có những tài sản
+  nào* nhưng không nói *project nào phải có cái gì*; khoảng trống đó là lý do một
+  sản phẩm phát hành ra mà tab trình duyệt trống trơn.
+
+- **`docs/BRAND_ASSETS.md` mục 13** - phân biệt **kho lưu** và **kho dùng**. Ghi
+  lại một ca đã xảy ra thật: file `logo-tsudev.png` đặt ở thư mục làm việc, tên
+  nghe như bản chính thức, hóa ra là bản sao đúng từng byte của
+  `assets/brand/variants/tsudev-badge-cyan.png` - biến thể `MUST NOT` dùng cho sản
+  phẩm. Tên file không phải bằng chứng, chuỗi băm mới là bằng chứng.
+
+### Thay đổi
+
+- **`AGENTS.md` mục 7.1** - quy ước gạch ngang được tách thành mục riêng và siết
+  lên mức bắt buộc rõ ràng. Phạm vi mở rộng sang tên nhánh, tiêu đề PR, nội dung
+  issue và **cả câu trả lời của agent trong hội thoại**. Bỏ cách hiểu "comment
+  dùng em-dash cũng được": agent đọc `-` không kém gì đọc em-dash, nên lý do đó
+  không đứng vững. Vẫn đúng hai ngoại lệ cũ: file migration bất biến, và dòng
+  trích dẫn chính ký tự đó kèm mã điểm.
+
+- **`scripts/check-standards.sh` mục 4** - cổng kiểm gạch ngang mở từ **10 đuôi
+  file lên 47**. Bản cũ chỉ quét `.md .json .css .ts .tsx .js .mjs .sh .yml .yaml`,
+  nghĩa là em-dash đi tự do vào `.py`, `.cs`, `.html`, `.sql`, `.toml` - đúng
+  những nơi `tsudev-swico` và `tsudev-cwico` sống. Thêm cảnh báo cho en-dash
+  (U+2013) ở mức `SHOULD NOT`, in kèm số dòng vi phạm để sửa thẳng. Sửa tham
+  chiếu sai "AGENTS.md mục 6" thành "mục 7.1".
+
+- **`docs/SEARCH_AND_FILTER.md` mục 7** - trần cứng `page_size` **nâng từ 100 lên
+  200** để khớp mốc lớn nhất của giao diện. Đây là nới lỏng, nên nó đi kèm hai
+  ràng buộc bù bắt buộc: giới hạn tần suất chặt hơn cho `page_size` từ 100 trở
+  lên, và bắt buộc phân trang con trỏ khi tập dữ liệu vượt 100.000 bản ghi. Cần
+  nhiều hơn 200 bản ghi thì đi đường xuất tệp chạy nền, `MUST NOT` nới trần API.
+  Ví dụ `page_size` trong tài liệu đổi từ `20` sang `10` cho khớp mặc định mới.
+
+- **`docs/DESIGN_SYSTEM.md` mục 5** - thêm mục "Vùng bản ghi" vào nhóm Data
+  Display, trỏ sang `DATA_TABLE.md`. Đồng thời thay hai en-dash còn sót ở mục 3
+  và 4 bằng gạch ngang ngắn.
+
+- **`docs/SECURITY_BASELINE.md` mục 6** - thêm dẫn nhập tách vai: tài liệu này giữ
+  **ngưỡng kỹ thuật**, `AUTH_AND_ACCOUNT.md` giữ **kiến trúc**. Làm chức năng
+  đăng nhập thì đọc cả hai.
+
+- **`docs/PROJECT_STRUCTURE.md` mục 3.3** - thêm 5 vị trí bắt buộc: `assets/brand/`,
+  `public/` (sản phẩm sinh ra, `MUST NOT` sửa tay), thư mục luồng xác thực, thư
+  mục trang tài khoản, và component bảng dùng chung.
+
+- **`docs/BRAND_ASSETS.md` mục 10** - bảng nợ đã biết nay trống. Cả hai món nợ
+  (nguồn sinh icon dưới chuẩn, bản logo cho nền tối) đã trả xong ở `v2.7.0` và
+  `v2.8.0`.
+
+- `AGENTS.md`, `docs/00-INDEX.md`, `templates/AGENTS.downstream.md` - đăng ký ba
+  tài liệu mới vào bản đồ quy ước và thêm ba lối đọc theo vai trò.
+
+### Hướng dẫn nâng cấp
+
+Repo con `MUST` làm theo thứ tự này. Bỏ qua bước nào thì cổng kiểm sẽ đỏ ở bước
+sau, hoặc tệ hơn, không đỏ mà sản phẩm sai.
+
+**Bước 1 - trước khi đồng bộ, dọn gạch ngang.** Cổng kiểm mới quét rộng gấp gần
+năm lần, nên repo đang xanh vẫn có thể đỏ ngay sau khi đồng bộ.
+
+```bash
+# Xem pham vi anh huong truoc
+git grep -lP '\x{2014}' -- . | grep -v '^migrations/'
+```
+
+Sửa từng file. `migrations/` giữ nguyên, không đụng. Dòng nào phải trích chính ký
+tự đó thì ghi kèm mã điểm `U+2014` trên cùng dòng.
+
+**Bước 2 - đồng bộ và chạy cổng kiểm.**
+
+```bash
+./scripts/sync-standards.sh
+./scripts/check-standards.sh
+```
+
+**Bước 3 - mở việc trong `logs/STATE.md` của repo mình.** Ba nghĩa vụ dưới đây là
+thay đổi mã nguồn, `MUST NOT` làm vội trong cùng PR đồng bộ. Liệt kê trước, sửa
+sau, đúng theo `docs/ONBOARDING.md` mục 2.4.
+
+| Việc | Áp cho | Đọc |
+| --- | --- | --- |
+| `QU-STD-AUTH` Rà luồng đăng nhập theo chuẩn mới, cài cơ chế Xác minh tài khoản | Hạng A và B | `AUTH_AND_ACCOUNT.md` mục 17 |
+| `QU-STD-TABLE` Thêm bộ chọn số bản ghi vào mọi bảng và mọi modal có bản ghi | Mọi repo có giao diện | `DATA_TABLE.md` mục 12 |
+| `QU-STD-BRAND` Bổ sung tài sản nhận diện còn thiếu và siêu dữ liệu `tsudev.com` | Mọi repo | `BRAND_ASSETS.md` mục 14 và `ECOSYSTEM_IDENTITY.md` mục 9 |
+
+**Bước 4 - máy chủ trước, giao diện sau.** Nâng trần `page_size` lên 200 kèm giới
+hạn tần suất **trước khi** mở mốc 200 trên giao diện. Mở giao diện trước là tự
+tạo một đường cạn tài nguyên trong khoảng thời gian ở giữa.
+
+**Điều KHÔNG đổi ở bản này:** không token màu nào đổi giá trị, không tài sản
+thương hiệu nào đổi, `logo-tsudev.png` cyan **vẫn là biến thể không dùng cho sản
+phẩm**. Giao diện đang chạy không phải vẽ lại.
+
+---
+
 ## 2.8.0 - 24/08/2026
 
 Bổ sung thuần. Trả xong món nợ ghi ở `v2.7.0` mục 10.

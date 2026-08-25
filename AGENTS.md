@@ -1,4 +1,4 @@
-# AGENTS.md - Bộ quy ước dùng chung tsudev (v2.0.0)
+# AGENTS.md - Bộ quy ước dùng chung tsudev (v3.0.0)
 
 > **ĐÂY LÀ NGUỒN CHÂN LÝ.** Bộ quy ước được biên tập tại repo
 > `tsudev-tsudev/tsudev-standards`. Repo con mang một BẢN SAO CHỈ-ĐỌC tại

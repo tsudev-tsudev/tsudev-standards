@@ -5,7 +5,13 @@
 
 ## Hàng đợi task (làm từ trên xuống)
 
-(không còn việc kỹ thuật nào chờ làm)
+- [ ] **TS-14** Phát hành `v3.0.0`: đẩy nhánh, mở PR, merge, gắn nhãn, tạo Release,
+      đồng bộ xuống 4 repo con. **Đang chặn ở bước đẩy mã** - `gh` đang chạy bằng
+      tài khoản không có quyền ghi. Chủ project gõ `! gh auth switch --user
+      tsudev-tsudev` trong terminal rồi phiên sau làm tiếp theo 6 bước ở
+      `logs/handover/20260825-07_phat-hanh-v3-chan-quyen.md` mục 2.
+      Nội dung đã xong và đã commit thành 8 commit trên nhánh
+      `feat/quy-uoc-v3-tai-khoan-bang-nhan-dien`.
 
 **Chờ chủ project quyết, agent không tự quyết được:**
 
@@ -34,6 +40,12 @@
 | --- | --- | --- |
 
 ## Đã hoàn thành (mới nhất trên cùng)
+
+- 25/08/2026 - **Đóng gói bản phát hành `v3.0.0` thành 8 commit theo nhóm chủ đề**
+  trên nhánh `feat/quy-uoc-v3-tai-khoan-bang-nhan-dien` (`3cc6cdf` tới `eeee963`),
+  bốn commit mang `BREAKING CHANGE:` riêng cho từng nghĩa vụ. `AGENTS.md` tách theo
+  hunk để giữ luật một commit một việc. Cổng kiểm xanh 0 lưu ý sau khi commit.
+  **Chưa đẩy được lên GitHub** - xem TS-14 trong hàng đợi.
 
 - 24/08/2026 - **`v3.0.0` (MAJOR): bộ quy ước lần đầu bắt buộc về chức năng sản
   phẩm, không chỉ về cách viết mã.** TS-9 tới TS-13 xong hết.
@@ -111,6 +123,12 @@
 
 > Quyết định kiến trúc lớn thì viết ADR riêng theo `docs/templates/ADR.md` và chỉ
 > ghi một dòng tham chiếu ở đây.
+
+- 25/08/2026 - **Repo này `MUST` đẩy mã bằng tài khoản `tsudev-tsudev`.** Máy có
+  hai tài khoản `gh` cùng đăng nhập; `credential.helper` toàn cục lấy token của
+  tài khoản **đang hoạt động**, không lấy theo `user.name` của repo. Đặt sai tài
+  khoản thì `git push` trả `403` chứ không báo gì rõ hơn. Kiểm bằng
+  `gh auth status`, đổi bằng `gh auth switch --user tsudev-tsudev`.
 
 - 24/08/2026 - **`logo-tsudev.png` KHÔNG được dùng cho sản phẩm** (chủ project
   quyết lại 24/08/2026, khẳng định quyết định cũ). File đó là bản sao đúng từng

@@ -118,4 +118,10 @@ khớp với dòng đã ghi ở `STATE.md` mục "Đã hoàn thành". Nhãn sẽ
 
 ## 7. Kết quả xử lý (agent nhận điền sau khi thực hiện)
 
--
+- 17:20 25/08/2026 - Chủ project mở khóa bằng cách gõ `gh auth switch` rồi lệnh
+  `gh pr merge`. Toàn bộ 6 bước ở mục 2 đã chạy: PR #25 merge kiểu `rebase`, nhãn
+  `v3.0.0` đã đẩy, 4 repo con đã có PR đồng bộ với CI xanh.
+- Còn lại: tạo Release và merge 4 PR repo con. Xem
+  `logs/handover/20260825-08_phat-hanh-v3-va-dong-bo.md` mục 2.
+- Lưu ý ở mục 2 về `gh auth switch` **cần đọc lại**: lệnh đó chạy xong vẫn không
+  đổi được tài khoản đang hoạt động. Cách dùng được ghi ở phiếu 08 mục 5a.

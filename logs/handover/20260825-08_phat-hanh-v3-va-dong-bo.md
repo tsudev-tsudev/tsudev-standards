@@ -128,3 +128,7 @@ lệnh đọc file cấu hình sau đó đều lọc token trước khi in.
   nhãn repo đó đang ghim. Xem TS-17 trong hàng đợi. Bài học vận hành cho lần sau:
   **phát hành và đồng bộ phải nằm trong cùng một phiên**, vì khoảng giữa hai việc
   đó là khoảng CI của mọi repo con đỏ.
+- 19:40 25/08/2026 - TS-16 và TS-17 **đã sửa dứt điểm** ở `v3.1.0` và `v3.1.1`.
+  Ràng buộc "phát hành và đồng bộ cùng một phiên" nêu trên **không còn bắt buộc**
+  kể từ `v3.1.0`: `--check` nay đối chiếu theo nhãn đang ghim nên repo con đứng
+  sau vẫn xanh. Chi tiết: `logs/handover/20260825-09_va-co-che-dong-bo.md`.

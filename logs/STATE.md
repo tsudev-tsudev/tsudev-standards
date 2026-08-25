@@ -13,36 +13,18 @@
       công cụ chuyển CSV sang vCard. Việc `QU-STD-AUTH` ở repo đó đã được ghi ở
       trạng thái **chặn**, chờ quyết định này. Sửa xong là bản `v3.0.1`.
 
-- [ ] **TS-17** Cổng kiểm CI của repo con đối chiếu với **nhánh `main`** của bộ
-      quy ước chứ không với **nhãn đang ghim**. `docs/SYNC.md` mục 5.1 chạy
-      `./scripts/sync-standards.sh --check` không kèm `--ref`, mà mặc định của
-      script là `REF="main"`. Hệ quả đo được trong phiên 07: ngay khi `v3.0.0` vào
-      `main` ở đây, CI trên `main` của `tsudev` đỏ (run `32834615830`, 13 dòng
-      `LỆCH`), dù repo đó lúc ấy đang ghim `v2.8.0` hoàn toàn hợp lệ. Nó chỉ xanh
-      lại sau khi đồng bộ.
-      Việc ghim theo nhãn ở `.standards-version` vì vậy **không có tác dụng thật**:
-      repo con buộc phải chạy theo `main` ngay lập tức, nếu không CI đỏ.
-      Hai hướng:
-      1. Sửa mục 5.1 thành `--ref "$(grep '^ref=' .standards-version | cut -d= -f2)"`.
-         Đối chiếu đúng thứ repo con đang ghim; muốn biết có bản mới hơn không thì
-         đó là việc của mục 5.2 (PR nâng cấp hằng tuần), không phải của cổng chặn merge.
-      2. Giữ nguyên, coi CI đỏ là tín hiệu "có bản mới, đồng bộ đi". Nhưng như vậy
-         thì `MUST` ghi rõ trong `SYNC.md` rằng đỏ kiểu này không chặn được gì
-         khác, và `MUST` phát hành + đồng bộ trong cùng một phiên.
-      Đề xuất hướng 1. Sửa xong là bản `v3.1.0`, gộp chung với TS-16.
+- [ ] **TS-18** Merge 4 PR đồng bộ `v3.1.1` rồi xác minh. Cả 4 đã **xanh toàn bộ
+      CI** lúc 19:35 25/08/2026, chỉ còn thiếu lệnh merge:
 
-- [ ] **TS-16** `sync-standards.sh` **không mang theo** `scripts/check-standards.sh`,
-      nên repo con chạy đồng bộ xong vẫn giữ cổng kiểm cũ quét 10 đuôi file, thấy
-      xanh và tưởng mình đạt chuẩn. Nghĩa là cải tiến lớn nhất của TS-12 (mở lên
-      47 đuôi) **không tự đến được repo con**. Phiên này đã chép tay script vào cả
-      4 repo con để vá tạm. Hai hướng sửa dứt điểm:
-      1. Đưa `scripts/` vào gói đồng bộ và vào `MANIFEST.sha256` (script thành
-         thứ được xác minh băm như tài liệu). Sạch nhất, nhưng repo con mất quyền
-         sửa script cho hợp cảnh của mình.
-      2. Thêm một bước bắt buộc vào `docs/SYNC.md` và vào mẫu "Hướng dẫn nâng
-         cấp" của CHANGELOG: `curl` lại `check-standards.sh` theo đúng nhãn đang
-         đồng bộ. Ít xâm lấn hơn, nhưng dựa vào người nhớ làm.
-      Đề xuất chọn hướng 1. Sửa xong là bản `v3.1.0`.
+      ```bash
+      GH_TOKEN="$(gh auth token --user tsudev-tsudev)" gh pr merge 74 --repo tsudev-tsudev/tsudev --squash --delete-branch
+      GH_TOKEN="$(gh auth token --user tsudev-tsudev)" gh pr merge 9  --repo tsudev-tsudev/swico --squash --delete-branch
+      GH_TOKEN="$(gh auth token --user tsudev-tsudev)" gh pr merge 13 --repo tsudev-tsudev/tsudev-cwico --squash --delete-branch
+      GH_TOKEN="$(gh auth token --user tsudev-tsudev)" gh pr merge 7  --repo tsudev-tsudev/tsudev-contact --squash --delete-branch
+      ```
+
+      Xác minh bằng **clone mới**, và `MUST` nhìn `ls .standards/scripts/` ra đủ
+      **2 file**, không chỉ nhìn `version=3.1.1`. Lý do ở phiếu bàn giao 09 mục 5b.
 
 **Chờ chủ project quyết, agent không tự quyết được:**
 
@@ -71,6 +53,24 @@
 | --- | --- | --- |
 
 ## Đã hoàn thành (mới nhất trên cùng)
+
+- 25/08/2026 - **TS-16 + TS-17 xong: `v3.1.0` và `v3.1.1`.** Hai lỗ hổng của
+  chính cơ chế đồng bộ, không phải của nội dung quy ước.
+  - `v3.1.0` (PR #25 tới #28): `scripts/check-standards.sh` và
+    `scripts/sync-standards.sh` vào gói đồng bộ, được `MANIFEST.sha256` băm; lần
+    đồng bộ ghi đè luôn cổng kiểm ở gốc repo con. `--check` không kèm `--ref` nay
+    đọc `ref=` trong `.standards-version` thay vì mặc định `main`, nên repo ghim
+    bản cũ không còn đỏ oan. Kiểm chứng bằng **4 ca dựng repo con giả**, không
+    chạy suông.
+  - `v3.1.1` (PR #29): **bản vá `v3.1.0` không tự triển khai được chính nó.** Phát
+    hiện lúc đồng bộ thật: repo con nâng cấp bằng `sync-standards.sh` cũ thì script
+    cũ chép gói cũ, `.standards-version` lên `3.1.1` mà `.standards/scripts/` vẫn
+    trống. Hướng dẫn nâng cấp nay có bước `curl` bắt buộc làm trước, kèm phép thử
+    `ls .standards/scripts/` phải ra 2 file.
+  - Hai nhãn, hai Release. Đồng bộ xuống 4 repo con theo đúng quy trình mới:
+    `tsudev` #74, `swico` #9, `tsudev-cwico` #13, `tsudev-contact` #7 - **CI xanh
+    cả 4, chưa merge** (xem TS-18).
+  Chi tiết: `logs/handover/20260825-09_va-co-che-dong-bo.md`.
 
 - 25/08/2026 - **TS-14: phát hành `v3.0.0` và đồng bộ xuống cả 4 repo con.**
   - Repo này: PR #25 (9 commit, merge kiểu `rebase` theo `GIT_WORKFLOW.md` mục
@@ -172,6 +172,16 @@
 
 > Quyết định kiến trúc lớn thì viết ADR riêng theo `docs/templates/ADR.md` và chỉ
 > ghi một dòng tham chiếu ở đây.
+
+- 25/08/2026 - **Cổng kiểm thuộc bộ quy ước, không phải file riêng của repo con.**
+  `scripts/check-standards.sh` bị lần đồng bộ ghi đè, và `--check` bắt lỗi nếu nó
+  cũ đi. Đổi lấy: repo con mất quyền sửa cổng kiểm cho hợp cảnh của mình. Chấp
+  nhận đánh đổi đó, vì cổng kiểm tự cũ đi trong im lặng còn tệ hơn không có cổng
+  kiểm - nó phát tín hiệu "đạt chuẩn" sai. Muốn đổi cổng kiểm thì đổi ở trung tâm.
+- 25/08/2026 - **`--check` trả lời "bản sao của tôi có bị sửa trộm không", KHÔNG
+  trả lời "tôi đã nâng cấp chưa".** Câu thứ hai là việc của PR định kỳ ở
+  `docs/SYNC.md` mục 5.2, không phải của cổng chặn merge. Trộn hai câu vào một
+  cổng là lý do việc ghim theo nhãn chưa bao giờ có tác dụng thật.
 
 - 25/08/2026 - **Repo này `MUST` đẩy mã bằng tài khoản `tsudev-tsudev`.** Máy có
   hai tài khoản `gh` cùng đăng nhập; `credential.helper` toàn cục lấy token của

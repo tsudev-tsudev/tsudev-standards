@@ -8,6 +8,99 @@ Mới nhất trên cùng.
 
 ---
 
+## 3.1.0 - 25/08/2026
+
+Bản này vá **hai lỗ hổng của chính cơ chế đồng bộ**, cả hai đều lộ ra khi phát
+hành `v3.0.0` xuống 4 repo con. Không tài liệu quy ước nào đổi nội dung, không
+token nào đổi giá trị, không repo con nào phải sửa mã.
+
+### Sửa
+
+- **`scripts/sync-standards.sh` nay mang theo cổng kiểm** (`TS-16`).
+
+  Trước bản này, gói đồng bộ gồm `AGENTS.md`, `VERSION`, `SECURITY.md`, `docs/`,
+  `tokens/`, `templates/` - **không có `scripts/`**. Repo con lấy
+  `check-standards.sh` bằng một lệnh `curl` đúng một lần lúc cài đặt, rồi không
+  bao giờ lấy lại.
+
+  Hậu quả đo được: `v3.0.0` mở cổng kiểm gạch ngang từ 10 lên 47 đuôi file, và
+  cải tiến đó **không đến được repo con nào**. Cả bốn repo đồng bộ xong vẫn chạy
+  script cũ, cổng kiểm xanh, và không ai biết là nó đang bỏ sót `.py`, `.cs`,
+  `.html`, `.sql`, `.toml`. Cổng kiểm mà tự cũ đi trong im lặng thì tệ hơn không
+  có cổng kiểm, vì nó phát ra tín hiệu "đạt chuẩn" sai.
+
+  Nay `scripts/check-standards.sh` và `scripts/sync-standards.sh` nằm trong gói,
+  được `MANIFEST.sha256` băm từng byte như mọi file quy ước khác. Sau khi chép
+  vào `.standards/scripts/`, lần đồng bộ **ghi đè luôn `scripts/check-standards.sh`**
+  ở gốc repo con - đó là bản thật sự được chạy. `make-manifest.sh` và
+  `build-tokens.mjs` **không** đi theo: chúng là việc của repo trung tâm, gửi
+  xuống chỉ tạo cơ hội chạy nhầm.
+
+  Ghi đè bằng `mv` chứ không `cp`: `cp` cắt cụt rồi ghi lại đúng inode đang mở,
+  mà bash đọc script theo từng đoạn, nên ghi đè inode của một script đang chạy là
+  hỏng phiên chạy. `mv` thay inode, tiến trình đang chạy giữ nguyên inode cũ.
+
+  `sync-standards.sh` **không tự ghi đè chính nó**, chỉ cảnh báo kèm lệnh chép
+  tay. Đổi công cụ bootstrap ngay giữa lúc nó đang chạy là rủi ro không đáng đổi
+  lấy chút tiện lợi.
+
+- **`--check` đối chiếu với nhãn đang ghim, không phải với `main`** (`TS-17`).
+
+  `docs/SYNC.md` mục 5.1 chạy `./scripts/sync-standards.sh --check` không kèm
+  `--ref`, mà mặc định của script là `main`. Nghĩa là cổng chặn merge của repo
+  con đang trả lời câu **"tôi đã nâng cấp chưa"** thay vì câu **"bản sao của tôi
+  có bị sửa trộm không"**.
+
+  Hậu quả đo được: 09:2x ngày 25/08/2026, `v3.0.0` vào `main` ở trung tâm. Ngay
+  sau đó CI trên `main` của `tsudev` đỏ (run `32834615830`, 13 dòng `LỆCH`) dù
+  repo đó đang ghim `v2.8.0` hoàn toàn hợp lệ và không làm gì sai. Nó chỉ xanh
+  lại lúc 09:58 sau khi đồng bộ. Việc ghim theo nhãn ở `SYNC.md` mục 7 vì vậy
+  **chưa bao giờ có tác dụng thật**: repo con buộc phải chạy theo `main` ngay
+  lập tức, nếu không CI đỏ.
+
+  Nay `--check` không kèm `--ref` sẽ đọc dòng `ref=` trong `.standards-version`
+  và đối chiếu với đúng nhãn đó. Muốn hỏi "đã có bản mới hơn chưa" thì truyền tay
+  `--ref main`, và đó là việc của PR nâng cấp định kỳ ở mục 5.2, không phải của
+  cổng chặn merge.
+
+- **`--check` nay bắt thêm hai ca** mà trước đây lọt hoàn toàn:
+  `scripts/check-standards.sh` ở gốc repo khác bản trung tâm (đây chính là lỗ
+  hổng `TS-16`), và file trong `.standards/scripts/` bị sửa. Repo đang ghim bản
+  cũ hơn `v3.1.0` thì hai ca này ra **lưu ý**, không ra lỗi - gói đồng bộ của bản
+  đó vốn không có `scripts/`, bắt lỗi là đỏ oan.
+
+### Thay đổi
+
+- **`docs/SYNC.md`** lên `v3.1.0`: mục 1 liệt kê rõ gói đồng bộ gồm những gì và
+  vì sao cổng kiểm thuộc về nó; mục 3 bỏ bước `curl` cổng kiểm (nay thừa); mục 4
+  nhắc `git add scripts/check-standards.sh`; mục 5 thêm bảng tách hai câu hỏi
+  "bị sửa trộm chưa" và "đã nâng cấp chưa"; mục 8 thêm ba dòng xử lý sự cố mới.
+- **`AGENTS.md` mục 8**: ghi rõ cổng kiểm thuộc bộ quy ước, và `--check` đối
+  chiếu theo nhãn đang ghim.
+
+### Hướng dẫn nâng cấp
+
+Bản MINOR, **không repo con nào phải sửa mã**. Ba bước:
+
+```bash
+./scripts/sync-standards.sh --ref v3.1.0
+./scripts/check-standards.sh
+git add .standards .standards-version scripts/check-standards.sh
+```
+
+**Nhớ `git add` cả `scripts/check-standards.sh`** - lần đồng bộ này ghi đè nó, và
+đó là điểm khác duy nhất so với mọi lần nâng cấp trước. Đồng bộ có sửa file đó
+thì in ra dòng `Đã cập nhật scripts/check-standards.sh theo bản trung tâm.`
+
+Nếu thấy `CẢNH BÁO: scripts/sync-standards.sh khác bản trung tâm`, chép tay đúng
+một lần theo lệnh mà script in ra. Từ lần sau `--check` sẽ canh giúp.
+
+**Điều KHÔNG đổi ở bản này:** không tài liệu quy ước nào đổi nội dung, không token
+màu nào đổi giá trị, không tài sản thương hiệu nào đổi. Ba việc `QU-STD-AUTH`,
+`QU-STD-TABLE`, `QU-STD-BRAND` mở ở `v3.0.0` vẫn nguyên như cũ.
+
+---
+
 ## 3.0.0 - 24/08/2026
 
 **Thay đổi phá vỡ.** Bộ quy ước lần đầu bắt buộc về **chức năng sản phẩm**, không
